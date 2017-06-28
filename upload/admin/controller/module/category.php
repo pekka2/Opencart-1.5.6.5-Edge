@@ -1,16 +1,16 @@
 <?php
-class ControllerModuleAccount extends Controller {
+class ControllerModuleCategory extends Controller {
 	private $error = array(); 
 
 	public function index() {   
-		$this->language->load('module/account');
+		$this->language->load('module/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('account', $this->request->post);		
+			$this->model_setting_setting->editSetting('category', $this->request->post);		
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -58,27 +58,27 @@ class ControllerModuleAccount extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/account', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('module/category', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
-		$this->data['action'] = $this->url->link('module/account', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['action'] = $this->url->link('module/category', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['modules'] = array();
 
-		if (isset($this->request->post['account_module'])) {
-			$this->data['modules'] = $this->request->post['account_module'];
-		} elseif ($this->config->get('account_module')) { 
-			$this->data['modules'] = $this->config->get('account_module');
+		if (isset($this->request->post['category_module'])) {
+			$this->data['modules'] = $this->request->post['category_module'];
+		} elseif ($this->config->get('category_module')) { 
+			$this->data['modules'] = $this->config->get('category_module');
 		}	
 
 		$this->load->model('design/layout');
 
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
 
-		$this->template = 'module/account.tpl';
+		$this->template = 'module/category.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -88,7 +88,7 @@ class ControllerModuleAccount extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/account')) {
+		if (!$this->user->hasPermission('modify', 'module/category')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

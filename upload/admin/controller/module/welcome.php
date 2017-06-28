@@ -1,16 +1,16 @@
 <?php
-class ControllerModuleAccount extends Controller {
+class ControllerModuleWelcome extends Controller {
 	private $error = array(); 
 
 	public function index() {   
-		$this->language->load('module/account');
+		$this->language->load('module/welcome');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('account', $this->request->post);		
+			$this->model_setting_setting->editSetting('welcome', $this->request->post);		
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -26,6 +26,7 @@ class ControllerModuleAccount extends Controller {
 		$this->data['text_column_left'] = $this->language->get('text_column_left');
 		$this->data['text_column_right'] = $this->language->get('text_column_right');
 
+		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
 		$this->data['entry_position'] = $this->language->get('entry_position');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -35,6 +36,8 @@ class ControllerModuleAccount extends Controller {
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['button_add_module'] = $this->language->get('button_add_module');
 		$this->data['button_remove'] = $this->language->get('button_remove');
+
+		$this->data['tab_module'] = $this->language->get('tab_module');
 
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -58,27 +61,33 @@ class ControllerModuleAccount extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/account', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('module/welcome', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
-		$this->data['action'] = $this->url->link('module/account', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['action'] = $this->url->link('module/welcome', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
+		$this->data['token'] = $this->session->data['token'];
+
 		$this->data['modules'] = array();
 
-		if (isset($this->request->post['account_module'])) {
-			$this->data['modules'] = $this->request->post['account_module'];
-		} elseif ($this->config->get('account_module')) { 
-			$this->data['modules'] = $this->config->get('account_module');
+		if (isset($this->request->post['welcome_module'])) {
+			$this->data['modules'] = $this->request->post['welcome_module'];
+		} elseif ($this->config->get('welcome_module')) { 
+			$this->data['modules'] = $this->config->get('welcome_module');
 		}	
 
 		$this->load->model('design/layout');
 
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
 
-		$this->template = 'module/account.tpl';
+		$this->load->model('localisation/language');
+
+		$this->data['languages'] = $this->model_localisation_language->getLanguages();
+
+		$this->template = 'module/welcome.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -88,7 +97,7 @@ class ControllerModuleAccount extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/account')) {
+		if (!$this->user->hasPermission('modify', 'module/welcome')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
