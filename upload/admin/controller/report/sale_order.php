@@ -1,20 +1,20 @@
 <?php
-class ControllerReportSaleTax extends Controller {
-	public function index() {     
-		$this->language->load('report/sale_tax');
+class ControllerReportSaleOrder extends Controller { 
+	public function index() {  
+		$this->language->load('report/sale_order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
-			$filter_date_start = '';
+			$filter_date_start = date('Y-m-d', strtotime(date('Y') . '-' . date('m') . '-01'));
 		}
 
 		if (isset($this->request->get['filter_date_end'])) {
 			$filter_date_end = $this->request->get['filter_date_end'];
 		} else {
-			$filter_date_end = '';
+			$filter_date_end = date('Y-m-d');
 		}
 
 		if (isset($this->request->get['filter_group'])) {
@@ -61,13 +61,13 @@ class ControllerReportSaleTax extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
 			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href'      => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'] . $url, 'SSL'),
 			'separator' => ' :: '
 		);
 
@@ -84,18 +84,17 @@ class ControllerReportSaleTax extends Controller {
 			'limit'                  => $this->config->get('config_admin_limit')
 		);
 
-		$order_total = $this->model_report_sale->getTotalTaxes($data); 
+		$order_total = $this->model_report_sale->getTotalOrders($data);
 
-		$this->data['orders'] = array();
-
-		$results = $this->model_report_sale->getTaxes($data);
+		$results = $this->model_report_sale->getOrders($data);
 
 		foreach ($results as $result) {
 			$this->data['orders'][] = array(
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
-				'title'      => $result['title'],
 				'orders'     => $result['orders'],
+				'products'   => $result['products'],
+				'tax'        => $this->currency->format($result['tax'], $this->config->get('config_currency')),
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			);
 		}
@@ -107,8 +106,9 @@ class ControllerReportSaleTax extends Controller {
 
 		$this->data['column_date_start'] = $this->language->get('column_date_start');
 		$this->data['column_date_end'] = $this->language->get('column_date_end');
-		$this->data['column_title'] = $this->language->get('column_title');
 		$this->data['column_orders'] = $this->language->get('column_orders');
+		$this->data['column_products'] = $this->language->get('column_products');
+		$this->data['column_tax'] = $this->language->get('column_tax');
 		$this->data['column_total'] = $this->language->get('column_total');
 
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
@@ -169,16 +169,16 @@ class ControllerReportSaleTax extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
-		$this->data['pagination'] = $pagination->render();
+		$this->data['pagination'] = $pagination->render();		
 
 		$this->data['filter_date_start'] = $filter_date_start;
 		$this->data['filter_date_end'] = $filter_date_end;		
 		$this->data['filter_group'] = $filter_group;
 		$this->data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->template = 'report/sale_tax.tpl';
+		$this->template = 'report/sale_order.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
