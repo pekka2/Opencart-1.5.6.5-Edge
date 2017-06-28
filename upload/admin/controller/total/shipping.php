@@ -1,16 +1,16 @@
-<?php
-class ControllerTotalCoupon extends Controller {
+<?php 
+class ControllerTotalShipping extends Controller { 
 	private $error = array(); 
 
 	public function index() { 
-		$this->language->load('total/coupon');
+		$this->language->load('total/shipping');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('coupon', $this->request->post);
+			$this->model_setting_setting->editSetting('shipping', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -22,6 +22,7 @@ class ControllerTotalCoupon extends Controller {
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 
+		$this->data['entry_estimator'] = $this->language->get('entry_estimator');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -50,27 +51,33 @@ class ControllerTotalCoupon extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('total/coupon', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('total/shipping', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
-		$this->data['action'] = $this->url->link('total/coupon', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['action'] = $this->url->link('total/shipping', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['coupon_status'])) {
-			$this->data['coupon_status'] = $this->request->post['coupon_status'];
+		if (isset($this->request->post['shipping_estimator'])) {
+			$this->data['shipping_estimator'] = $this->request->post['shipping_estimator'];
 		} else {
-			$this->data['coupon_status'] = $this->config->get('coupon_status');
+			$this->data['shipping_estimator'] = $this->config->get('shipping_estimator');
 		}
 
-		if (isset($this->request->post['coupon_sort_order'])) {
-			$this->data['coupon_sort_order'] = $this->request->post['coupon_sort_order'];
+		if (isset($this->request->post['shipping_status'])) {
+			$this->data['shipping_status'] = $this->request->post['shipping_status'];
 		} else {
-			$this->data['coupon_sort_order'] = $this->config->get('coupon_sort_order');
+			$this->data['shipping_status'] = $this->config->get('shipping_status');
 		}
 
-		$this->template = 'total/coupon.tpl';
+		if (isset($this->request->post['shipping_sort_order'])) {
+			$this->data['shipping_sort_order'] = $this->request->post['shipping_sort_order'];
+		} else {
+			$this->data['shipping_sort_order'] = $this->config->get('shipping_sort_order');
+		}
+
+		$this->template = 'total/shipping.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -80,7 +87,7 @@ class ControllerTotalCoupon extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/coupon')) {
+		if (!$this->user->hasPermission('modify', 'total/shipping')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
