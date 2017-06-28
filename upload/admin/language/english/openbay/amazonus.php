@@ -1,8 +1,9 @@
 <?php
-$_['heading_title'] = 'Amazon (EU)';
-$_['lang_heading_title'] = 'OpenBay Pro for Amazon EU';
+//Heading
+$_['heading_title'] = 'Amazon (US)';
+$_['lang_heading_title'] = 'OpenBay Pro for Amazon US';
 
-//Settings
+//Settings tab
 $_['token_text'] = 'Token:';
 $_['enc_string1_text'] = 'Encryption String 1:';
 $_['enc_string2_text'] = 'Encryption String 2:';
@@ -18,12 +19,10 @@ $_['partially_shipped_text'] = 'Partialy Shipped';
 $_['shipped_text'] = 'Shipped';
 $_['canceled_text'] = 'Canceled';
 $_['import_tax_text'] = 'Tax for imported items';
-$_['import_tax_help'] = 'Used if Amazon does not return tax information';
+$_['import_tax_help'] = 'Used if amazonus does not return tax information';
 $_['other_text'] = 'Other';
 $_['customer_group_text'] = 'Customer Group';
 $_['customer_group_help_text'] = 'Select a customer group to assign to imported orders';
-
-//Marketplace tab
 $_['marketplaces_text'] = 'Marketplaces';
 $_['markets_text'] = "Select markets from which you would like to import your orders";
 $_['de_text'] = "Germany";
@@ -32,7 +31,7 @@ $_['it_text'] = "Italy";
 $_['es_text'] = "Spain";
 $_['uk_text'] = "United Kingdom";
 
-//Subscriptions tab
+//Subscription tab
 $_['register_invite_text'] = "Don't have the credentials? Register now to get them";
 $_['register_text'] = 'Register';
 $_['loading_text'] = 'Loading';
