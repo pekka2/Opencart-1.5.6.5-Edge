@@ -1,4 +1,4 @@
-# Opencart-1.5.6.5-Edge
+# Opencart 1.5.6.5 Edge
 Full Opencart install package
 
 Features:
