@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']     = 'Tax Report';
+$_['heading_title']     = 'Returns Report';
 
 // Text
 $_['text_year']         = 'Years';
@@ -12,13 +12,11 @@ $_['text_all_status']   = 'All Statuses';
 // Column
 $_['column_date_start'] = 'Date Start';
 $_['column_date_end']   = 'Date End';
-$_['column_title']      = 'Tax Title';
-$_['column_orders']     = 'No. Orders';
-$_['column_total']      = 'Total';
+$_['column_returns']    = 'No. Returns';
 
 // Entry
 $_['entry_date_start']  = 'Date Start:';
 $_['entry_date_end']    = 'Date End:';
 $_['entry_group']       = 'Group By:';
-$_['entry_status']      = 'Order Status:';
+$_['entry_status']      = 'Return Status:';
 ?>
