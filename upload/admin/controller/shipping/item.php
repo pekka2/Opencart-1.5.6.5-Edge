@@ -1,16 +1,16 @@
 <?php
-class ControllerShippingFlat extends Controller {
+class ControllerShippingItem extends Controller { 
 	private $error = array(); 
 
-	public function index() {   
-		$this->language->load('shipping/flat');
+	public function index() {  
+		$this->language->load('shipping/item');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('flat', $this->request->post);		
+			$this->model_setting_setting->editSetting('item', $this->request->post);		
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -55,53 +55,53 @@ class ControllerShippingFlat extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('shipping/flat', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('shipping/item', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
-		$this->data['action'] = $this->url->link('shipping/flat', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['action'] = $this->url->link('shipping/item', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['flat_cost'])) {
-			$this->data['flat_cost'] = $this->request->post['flat_cost'];
+		if (isset($this->request->post['item_cost'])) {
+			$this->data['item_cost'] = $this->request->post['item_cost'];
 		} else {
-			$this->data['flat_cost'] = $this->config->get('flat_cost');
+			$this->data['item_cost'] = $this->config->get('item_cost');
 		}
 
-		if (isset($this->request->post['flat_tax_class_id'])) {
-			$this->data['flat_tax_class_id'] = $this->request->post['flat_tax_class_id'];
+		if (isset($this->request->post['item_tax_class_id'])) {
+			$this->data['item_tax_class_id'] = $this->request->post['item_tax_class_id'];
 		} else {
-			$this->data['flat_tax_class_id'] = $this->config->get('flat_tax_class_id');
+			$this->data['item_tax_class_id'] = $this->config->get('item_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['flat_geo_zone_id'])) {
-			$this->data['flat_geo_zone_id'] = $this->request->post['flat_geo_zone_id'];
+		if (isset($this->request->post['item_geo_zone_id'])) {
+			$this->data['item_geo_zone_id'] = $this->request->post['item_geo_zone_id'];
 		} else {
-			$this->data['flat_geo_zone_id'] = $this->config->get('flat_geo_zone_id');
+			$this->data['item_geo_zone_id'] = $this->config->get('item_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['flat_status'])) {
-			$this->data['flat_status'] = $this->request->post['flat_status'];
+		if (isset($this->request->post['item_status'])) {
+			$this->data['item_status'] = $this->request->post['item_status'];
 		} else {
-			$this->data['flat_status'] = $this->config->get('flat_status');
+			$this->data['item_status'] = $this->config->get('item_status');
 		}
 
-		if (isset($this->request->post['flat_sort_order'])) {
-			$this->data['flat_sort_order'] = $this->request->post['flat_sort_order'];
+		if (isset($this->request->post['item_sort_order'])) {
+			$this->data['item_sort_order'] = $this->request->post['item_sort_order'];
 		} else {
-			$this->data['flat_sort_order'] = $this->config->get('flat_sort_order');
-		}				
+			$this->data['item_sort_order'] = $this->config->get('item_sort_order');
+		}	
 
-		$this->template = 'shipping/flat.tpl';
+		$this->template = 'shipping/item.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
@@ -111,7 +111,7 @@ class ControllerShippingFlat extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'shipping/flat')) {
+		if (!$this->user->hasPermission('modify', 'shipping/item')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
