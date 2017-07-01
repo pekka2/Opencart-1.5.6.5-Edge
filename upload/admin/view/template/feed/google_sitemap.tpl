@@ -18,8 +18,8 @@
         <table class="form">
           <tr>
             <td><?php echo $entry_status; ?></td>
-            <td><select name="google_base_status">
-                <?php if ($google_base_status) { ?>
+            <td><select name="google_sitemap_status">
+                <?php if ($google_sitemap_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
