@@ -13,14 +13,16 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/feed.png" alt="" /> <?php echo $heading_title; ?></h1>
+      <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
     </div>
     <div class="content">
       <table class="list">
         <thead>
           <tr>
             <td class="left"><?php echo $column_name; ?></td>
+            <td></td>
             <td class="left"><?php echo $column_status; ?></td>
+            <td class="right"><?php echo $column_sort_order; ?></td>
             <td class="right"><?php echo $column_action; ?></td>
           </tr>
         </thead>
@@ -29,7 +31,9 @@
           <?php foreach ($extensions as $extension) { ?>
           <tr>
             <td class="left"><?php echo $extension['name']; ?></td>
+            <td class="center"><?php echo $extension['link'] ?></td>
             <td class="left"><?php echo $extension['status'] ?></td>
+            <td class="right"><?php echo $extension['sort_order']; ?></td>
             <td class="right"><?php foreach ($extension['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
               <?php } ?></td>
@@ -37,7 +41,7 @@
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
