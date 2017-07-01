@@ -16,39 +16,42 @@
             <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="date-start" size="12" /></td>
           <td><?php echo $entry_date_end; ?>
             <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="date-end" size="12" /></td>
+          <td><?php echo $entry_status; ?>
+            <select name="filter_order_status_id">
+              <option value="0"><?php echo $text_all_status; ?></option>
+              <?php foreach ($order_statuses as $order_status) { ?>
+              <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+              <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
           <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
         </tr>
       </table>
       <table class="list">
         <thead>
           <tr>
-            <td class="left"><?php echo $column_affiliate; ?></td>
-            <td class="left"><?php echo $column_email; ?></td>
-            <td class="left"><?php echo $column_status; ?></td>
-            <td class="right"><?php echo $column_commission; ?></td>
-            <td class="right"><?php echo $column_orders; ?></td>
+            <td class="left"><?php echo $column_name; ?></td>
+            <td class="left"><?php echo $column_model; ?></td>
+            <td class="right"><?php echo $column_quantity; ?></td>
             <td class="right"><?php echo $column_total; ?></td>
-            <td class="right"><?php echo $column_action; ?></td>
           </tr>
         </thead>
         <tbody>
-          <?php if ($affiliates) { ?>
-          <?php foreach ($affiliates as $affiliate) { ?>
+          <?php if ($products) { ?>
+          <?php foreach ($products as $product) { ?>
           <tr>
-            <td class="left"><?php echo $affiliate['affiliate']; ?></td>
-            <td class="left"><?php echo $affiliate['email']; ?></td>
-            <td class="left"><?php echo $affiliate['status']; ?></td>
-            <td class="right"><?php echo $affiliate['commission']; ?></td>
-            <td class="right"><?php echo $affiliate['orders']; ?></td>
-            <td class="right"><?php echo $affiliate['total']; ?></td>
-            <td class="right"><?php foreach ($affiliate['action'] as $action) { ?>
-              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>
+            <td class="left"><?php echo $product['name']; ?></td>
+            <td class="left"><?php echo $product['model']; ?></td>
+            <td class="right"><?php echo $product['quantity']; ?></td>
+            <td class="right"><?php echo $product['total']; ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="7"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -59,7 +62,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=report/affiliate_commission&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/product_purchased&token=<?php echo $token; ?>';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
 	
@@ -73,6 +76,12 @@ function filter() {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 	
+	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
+	
+	if (filter_order_status_id != 0) {
+		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+	}	
+
 	location = url;
 }
 //--></script> 

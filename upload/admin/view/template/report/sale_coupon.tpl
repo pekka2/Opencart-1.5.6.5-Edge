@@ -22,33 +22,29 @@
       <table class="list">
         <thead>
           <tr>
-            <td class="left"><?php echo $column_affiliate; ?></td>
-            <td class="left"><?php echo $column_email; ?></td>
-            <td class="left"><?php echo $column_status; ?></td>
-            <td class="right"><?php echo $column_commission; ?></td>
+            <td class="left"><?php echo $column_name; ?></td>
+            <td class="left"><?php echo $column_code; ?></td>
             <td class="right"><?php echo $column_orders; ?></td>
             <td class="right"><?php echo $column_total; ?></td>
             <td class="right"><?php echo $column_action; ?></td>
           </tr>
         </thead>
         <tbody>
-          <?php if ($affiliates) { ?>
-          <?php foreach ($affiliates as $affiliate) { ?>
+          <?php if ($coupons) { ?>
+          <?php foreach ($coupons as $coupon) { ?>
           <tr>
-            <td class="left"><?php echo $affiliate['affiliate']; ?></td>
-            <td class="left"><?php echo $affiliate['email']; ?></td>
-            <td class="left"><?php echo $affiliate['status']; ?></td>
-            <td class="right"><?php echo $affiliate['commission']; ?></td>
-            <td class="right"><?php echo $affiliate['orders']; ?></td>
-            <td class="right"><?php echo $affiliate['total']; ?></td>
-            <td class="right"><?php foreach ($affiliate['action'] as $action) { ?>
+            <td class="left"><?php echo $coupon['name']; ?></td>
+            <td class="left"><?php echo $coupon['code']; ?></td>
+            <td class="right"><?php echo $coupon['orders']; ?></td>
+            <td class="right"><?php echo $coupon['total']; ?></td>
+            <td class="right"><?php foreach ($coupon['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>
+              <?php } ?></td>            
           </tr>
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="7"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -59,7 +55,7 @@
 </div>
 <script type="text/javascript"><!--
 function filter() {
-	url = 'index.php?route=report/affiliate_commission&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/sale_order&token=<?php echo $token; ?>';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
 	
@@ -72,7 +68,7 @@ function filter() {
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
-	
+
 	location = url;
 }
 //--></script> 
