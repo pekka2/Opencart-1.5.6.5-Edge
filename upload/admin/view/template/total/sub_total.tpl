@@ -18,8 +18,8 @@
         <table class="form">
           <tr>
             <td><?php echo $entry_status; ?></td>
-            <td><select name="credit_status">
-                <?php if ($credit_status) { ?>
+            <td><select name="sub_total_status">
+                <?php if ($sub_total_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -30,7 +30,7 @@
           </tr>
           <tr>
             <td><?php echo $entry_sort_order; ?></td>
-            <td><input type="text" name="credit_sort_order" value="<?php echo $credit_sort_order; ?>" size="1" /></td>
+            <td><input type="text" name="sub_total_sort_order" value="<?php echo $sub_total_sort_order; ?>" size="1" /></td>
           </tr>
         </table>
       </form>
