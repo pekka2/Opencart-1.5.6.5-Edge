@@ -15,6 +15,22 @@
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+        <table class="form">
+          <tr>
+            <td><?php echo $entry_admin; ?></td>
+            <td><?php if ($store_admin) { ?>
+              <input type="radio" name="store_admin" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="store_admin" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="store_admin" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="store_admin" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+        </table>
         <table id="module" class="list">
           <thead>
             <tr>
@@ -29,7 +45,7 @@
           <?php foreach ($modules as $module) { ?>
           <tbody id="module-row<?php echo $module_row; ?>">
             <tr>
-              <td class="left"><select name="account_module[<?php echo $module_row; ?>][layout_id]">
+              <td class="left"><select name="store_module[<?php echo $module_row; ?>][layout_id]">
                   <?php foreach ($layouts as $layout) { ?>
                   <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
                   <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
@@ -38,7 +54,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-              <td class="left"><select name="account_module[<?php echo $module_row; ?>][position]">
+              <td class="left"><select name="store_module[<?php echo $module_row; ?>][position]">
                   <?php if ($module['position'] == 'content_top') { ?>
                   <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
                   <?php } else { ?>
@@ -60,7 +76,7 @@
                   <option value="column_right"><?php echo $text_column_right; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="left"><select name="account_module[<?php echo $module_row; ?>][status]">
+              <td class="left"><select name="store_module[<?php echo $module_row; ?>][status]">
                   <?php if ($module['status']) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -69,7 +85,7 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="right"><input type="text" name="account_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
+              <td class="right"><input type="text" name="store_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
               <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
             </tr>
           </tbody>
@@ -92,22 +108,22 @@ var module_row = <?php echo $module_row; ?>;
 function addModule() {	
 	html  = '<tbody id="module-row' + module_row + '">';
 	html += '  <tr>';
-	html += '    <td class="left"><select name="account_module[' + module_row + '][layout_id]">';
+	html += '    <td class="left"><select name="store_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
 	html += '    </select></td>';
-	html += '    <td class="left"><select name="account_module[' + module_row + '][position]">';
+	html += '    <td class="left"><select name="store_module[' + module_row + '][position]">';
 	html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
 	html += '      <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
 	html += '      <option value="column_left"><?php echo $text_column_left; ?></option>';
 	html += '      <option value="column_right"><?php echo $text_column_right; ?></option>';
 	html += '    </select></td>';
-	html += '    <td class="left"><select name="account_module[' + module_row + '][status]">';
+	html += '    <td class="left"><select name="store_module[' + module_row + '][status]">';
     html += '      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
     html += '      <option value="0"><?php echo $text_disabled; ?></option>';
     html += '    </select></td>';
-	html += '    <td class="right"><input type="text" name="account_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
+	html += '    <td class="right"><input type="text" name="store_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
 	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
