@@ -1,6 +1,6 @@
 <?php
 //Text
-$_['paid_on_amazon_text'] = 'Paid on Amazon';
+$_['paid_on_amazonus_text'] = 'Paid on Amazon US';
 
 //Order totals
 $_['shipping_text'] = 'Shipping';
