@@ -1,55 +1,99 @@
 <?php
-$_['heading_title'] = 'Recurring payments';
-$_['button_continue'] = 'Continue';
-$_['button_view'] = 'View';
-$_['button_cancel_profile'] = 'Cancel payments';
-$_['text_empty'] = 'No recurring payment profiles found';
-$_['text_product'] = 'Product: ';
-$_['text_order'] = 'Order: ';
-$_['text_quantity'] = 'Quantity: ';
-$_['text_account'] = 'Account';
-$_['text_action'] = 'Action';
-$_['text_recurring'] = 'Recurring payment';
-$_['text_transactions'] = 'Transactions';
-$_['button_return'] = 'Return';
-$_['text_confirm_cancel'] = 'Are you sure you want to cancel the profile?';
-$_['text_empty_transactions'] = 'No transactions for this profile';
+class ModelAccountRecurring extends Model {
 
-$_['column_created'] = 'Created';
-$_['column_type'] = 'Type';
-$_['column_amount'] = 'Amount';
-$_['column_status'] = 'Status';
-$_['column_product'] = 'Product';
-$_['column_action'] = 'Action';
-$_['column_profile_id'] = 'Profile ID';
+	private $recurring_status = array(
+		0 => 'Inactive',
+		1 => 'Active',
+		2 => 'Suspended',
+		3 => 'Cancelled',
+		4 => 'Expired / Complete'
+	);
 
-$_['text_recurring_detail'] = 'Recurring payment details';
-$_['text_recurring_id'] = 'Profile ID: ';
-$_['text_payment_method'] = 'Payment method: ';
-$_['text_date_added'] = 'Created: ';
-$_['text_recurring_description'] = 'Description: ';
-$_['text_status'] = 'Status: ';
-$_['text_ref'] = 'Reference: ';
+	private $transaction_type = array(
+		0 => 'Created',
+		1 => 'Payment',
+		2 => 'Outstanding payment',
+		3 => 'Payment skipped',
+		4 => 'Payment failed',
+		5 => 'Cancelled',
+		6 => 'Suspended',
+		7 => 'Suspended from failed payment',
+		8 => 'Outstanding payment failed',
+		9 => 'Expired',
+	);
 
-$_['text_status_active'] = 'Active';
-$_['text_status_inactive'] = 'Inactive';
-$_['text_status_cancelled'] = 'Cancelled';
-$_['text_status_suspended'] = 'Suspended';
-$_['text_status_expired'] = 'Expired';
-$_['text_status_pending'] = 'Pending';
+	public function getProfile($id){
+		$result = $this->db->query("SELECT `or`.*,`o`.`payment_method`,`o`.`payment_code`,`o`.`currency_code` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON `or`.`order_id` = `o`.`order_id` WHERE `or`.`order_recurring_id` = '".(int)$id."' AND `o`.`customer_id` = '".(int)$this->customer->getId()."' LIMIT 1");
 
-$_['text_transaction_created'] = 'Created';
-$_['text_transaction_payment'] = 'Payment';
-$_['text_transaction_outstanding_payment'] = 'Outstanding payment';
-$_['text_transaction_skipped'] = 'Payment skipped';
-$_['text_transaction_failed'] = 'Payment failed';
-$_['text_transaction_cancelled'] = 'Cancelled';
-$_['text_transaction_suspended'] = 'Suspended';
-$_['text_transaction_suspended_failed'] = 'Suspended from failed payment';
-$_['text_transaction_outstanding_failed'] = 'Outstanding payment failed';
-$_['text_transaction_expired'] = 'Expired';
+		if($result->num_rows > 0){
+			$profile = $result->row;
 
-$_['error_not_cancelled'] = 'Error: %s';
-$_['error_not_found'] = 'Could not cancel profile';
-$_['success_cancelled'] = 'Recurring payment has been cancelled';
+			return $profile;
+		}else{
+			return false;
+		}
+	}
+
+	public function getProfileByRef($ref){
+		$profile = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `profile_reference` = '".$this->db->escape($ref)."' LIMIT 1");
+
+		if($profile->num_rows > 0){
+			return $profile->row;
+		}else{
+			return false;
+		}
+	}
+
+	public function getProfileTransactions($id){
+
+		$profile = $this->getProfile($id);
+
+		$results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '".(int)$id."'");
+
+		if($results->num_rows > 0){
+			$transactions = array();
+
+			foreach($results->rows as $transaction){
+
+				$transaction['amount'] = $this->currency->format($transaction['amount'], $profile['currency_code'], 1);
+
+				$transactions[] = $transaction;
+			}
+
+			return $transactions;
+		}else{
+			return false;
+		}
+	}
+
+	public function getAllProfiles($start = 0, $limit = 20){
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 1;
+		}
+
+		$result = $this->db->query("SELECT `or`.*,`o`.`payment_method`,`o`.`currency_id`,`o`.`currency_value` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON `or`.`order_id` = `o`.`order_id` WHERE `o`.`customer_id` = '".(int)$this->customer->getId()."' ORDER BY `o`.`order_id` DESC LIMIT " . (int)$start . "," . (int)$limit);
+
+		if($result->num_rows > 0){
+			$profiles = array();
+
+			foreach($result->rows as $profile){
+				$profiles[] = $profile;
+			}
+
+			return $profiles;
+		}else{
+			return false;
+		}
+	}
+
+	public function getTotalRecurring(){
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON `or`.`order_id` = `o`.`order_id` WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		return $query->row['total'];
+	}
+}
 ?>
