@@ -1,6 +1,6 @@
 <?php
 // Heading 
-$_['heading_title']    = 'Account';
+$_['heading_title']    = 'Affiliate';
 
 // Text
 $_['text_register']    = 'Register';
@@ -10,12 +10,7 @@ $_['text_forgotten']   = 'Forgotten Password';
 $_['text_account']     = 'My Account';
 $_['text_edit']        = 'Edit Account';
 $_['text_password']    = 'Password';
-$_['text_address']     = 'Address Books';
-$_['text_wishlist']    = 'Wish List';
-$_['text_order']       = 'Order History';
-$_['text_download']    = 'Downloads';
-$_['text_return']      = 'Returns';
+$_['text_payment']     = 'Payment Options';
+$_['text_tracking']    = 'Affiliate Tracking';
 $_['text_transaction'] = 'Transactions';
-$_['text_newsletter']  = 'Newsletter';
-$_['text_recurring']   = 'Recurring payments';
 ?>
