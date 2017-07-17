@@ -16,9 +16,7 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$this->data['error'] = '';
 		}
-		if ($this->config->get('change_module_css')) {
-			$this->document->addStyle('catalog/view/theme/default/stylesheet/style-y.css');
-		}
+
 		$this->data['base'] = $server;
 		$this->data['description'] = $this->document->getDescription();
 		$this->data['keywords'] = $this->document->getKeywords();
