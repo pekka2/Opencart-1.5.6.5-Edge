@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.5.6.5 E');
+define('VERSION', '1.5.6.5 Edge');
 
 // Configuration
 if (file_exists('config.php')) {
