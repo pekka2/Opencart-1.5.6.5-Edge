@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `oc_banner` (
 
 INSERT INTO `oc_banner` (`banner_id`, `name`, `status`) VALUES
 (6, 'HP Products', 1),
-(7, 'Samsung Tab', 1),
+(7, 'Mac Book Air', 1),
 (8, 'Manufacturers', 1);
 
 -- --------------------------------------------------------
@@ -247,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `oc_banner_image` (
 --
 
 INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`) VALUES
-(54, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/demo/samsung_banner.jpg'),
+(54, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/demo/MacBookAir.jpg'),
 (77, 6, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_banner.jpg'),
 (75, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=5', 'data/demo/htc_logo.jpg'),
 (73, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=8', 'data/demo/apple_logo.jpg'),
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `oc_banner_image_description` (
 --
 
 INSERT INTO `oc_banner_image_description` (`banner_image_id`, `language_id`, `banner_id`, `title`) VALUES
-(54, 1, 7, 'Samsung Tab 10.1'),
+(54, 1, 7, 'Mac book Air'),
 (77, 1, 6, 'HP Banner'),
 (75, 1, 8, 'HTC'),
 (74, 1, 8, 'Canon'),
