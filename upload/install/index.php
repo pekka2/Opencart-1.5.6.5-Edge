@@ -46,7 +46,7 @@ $registry->set('document', $document);
 $upgrade = false;
 
 if (file_exists('../config.php')) {
-	if (filesize('../config.php') > 0) {
+	if (filesize('../config.php') > 200) {
 		$upgrade = true;
 		
 		$lines = file(DIR_OPENCART . 'config.php');
