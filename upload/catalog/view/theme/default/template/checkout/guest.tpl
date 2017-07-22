@@ -20,6 +20,25 @@
         <?php } ?>
         <?php } ?>
       </div>
+          <div id="company-id-display" class="form-group required">
+            <label class="col-sm-2 control-label" for="input-company_id"><?php echo $entry_company_id; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="company_id" value="<?php echo $tax_id; ?>" placeholder="<?php echo $entry_company_id; ?>" id="input-company_id" class="form-control" />
+              <?php if ($error_company_id) { ?>
+              <div class="text-danger"><?php echo $error_company_id; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+    
+          <div id="tax-id-display" class="form-group required">
+            <label class="col-sm-2 control-label" for="input-tax_id"><?php echo $entry_tax_id; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="tax_id" value="<?php echo $tax_id; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-tax_id" class="form-control" />
+              <?php if ($error_tax_id) { ?>
+              <div class="text-danger"><?php echo $error_tax_id; ?></div>
+              <?php } ?>
+            </div>
+          </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
         <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
