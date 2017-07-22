@@ -99,7 +99,7 @@
             <tr>
               <td class="left"><span class="required">*</span> <?php echo $entry_option_value; ?></td>
               <td class="left"><?php echo $entry_image; ?></td>
-                <?php if ($type == 'radio' || $type == 'select') { ?>
+                <?php if ($type == 'radio' || $type == 'select' || $type == "checkbox") { ?>
                     <td class="right"><?php echo $entry_checked; ?></td>
                  <?php } ?>
               <td class="right"><?php echo $entry_sort_order; ?></td>
@@ -123,7 +123,7 @@
                   <br />
                   <a onclick="image_upload('image<?php echo $option_value_row; ?>', 'thumb<?php echo $option_value_row; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $option_value_row; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $option_value_row; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
 
-              <?php if ($type == 'radio' || $type == 'select') { ?>
+              <?php if ($type == 'radio' || $type == 'select' || $type == "checkbox") { ?>
                     <td class="right">
                       <?php    if($option_values[$option_value_row]['checked'] == 1){?>
                        <input type="checkbox" name="option_value[<?php echo $option_value_row; ?>][checked]" value="1" checked="checked"/>
@@ -140,7 +140,7 @@
           <?php } ?>
           <tfoot>
             <tr>
-                <?php if ($type == 'radio' || $type == 'select') { ?>
+                <?php if ($type == 'radio' || $type == 'select' || $type == "checkbox") { ?>
                    <td colspan="4"></td>
                  <?php } else {?>
                    <td colspan="3"></td>
