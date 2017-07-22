@@ -152,6 +152,17 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['payment_country_id'] = $payment_address['country_id'];
 			$data['payment_address_format'] = $payment_address['address_format'];
 
+			if (isset($this->session->data['payment_company_id'])) {
+				$data['payment_company_id'] = $this->session->data['payment_company_id'];
+			} else {
+				$data['payment_company_id'] = '';
+			}
+			if (isset($this->session->data['payment_tax_id'])) {
+				$data['payment_tax_id'] = $this->session->data['payment_tax_id'];
+			} else {
+				$data['payment_tax_id'] = '';
+			}
+
 			if (isset($this->session->data['payment_method']['title'])) {
 				$data['payment_method'] = $this->session->data['payment_method']['title'];
 			} else {
