@@ -20,25 +20,14 @@
         <?php } ?>
         <?php } ?>
       </div>
-          <div id="company-id-display" class="form-group required">
-            <label class="col-sm-2 control-label" for="input-company_id"><?php echo $entry_company_id; ?></label>
-            <div class="col-sm-10">
+      <div id="company-id-display" class="form-group required">
+            <label class="control-label" for="input-company_id"><?php echo $entry_company_id; ?></label>
               <input type="text" name="company_id" value="<?php echo $tax_id; ?>" placeholder="<?php echo $entry_company_id; ?>" id="input-company_id" class="form-control" />
-              <?php if ($error_company_id) { ?>
-              <div class="text-danger"><?php echo $error_company_id; ?></div>
-              <?php } ?>
-            </div>
-          </div>
-    
-          <div id="tax-id-display" class="form-group required">
-            <label class="col-sm-2 control-label" for="input-tax_id"><?php echo $entry_tax_id; ?></label>
-            <div class="col-sm-10">
+      </div>  
+      <div id="tax-id-display" class="form-group required">
+            <label class="control-label" for="input-tax_id"><?php echo $entry_tax_id; ?></label>
               <input type="text" name="tax_id" value="<?php echo $tax_id; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-tax_id" class="form-control" />
-              <?php if ($error_tax_id) { ?>
-              <div class="text-danger"><?php echo $error_tax_id; ?></div>
-              <?php } ?>
-            </div>
-          </div>
+      </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
         <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
@@ -138,6 +127,45 @@
     <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
 </div>
+<script type="text/javascript"><!--
+$('input[name=\'customer_group_id\']').on('change',function() {
+	var customer_group = [];
+<?php foreach ($customer_groups as $customer_group) { ?>
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_required'] = '<?php echo $customer_group['company_id_required']; ?>';
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
+<?php } ?>	
+
+	if (customer_group[this.value]) {
+		if (customer_group[this.value]['company_id_display'] == '1') {
+			$('#company-id-display').show();
+		} else {
+			$('#company-id-display').hide();
+		}
+		
+		if (customer_group[this.value]['company_id_required'] == '1') {
+			$('#company-id-required').show();
+		} else {
+			$('#company-id-required').hide();
+		}
+		
+		if (customer_group[this.value]['tax_id_display'] == '1') {
+			$('#tax-id-display').show();
+		} else {
+			$('#tax-id-display').hide();
+		}
+		
+		if (customer_group[this.value]['tax_id_required'] == '1') {
+			$('#tax-id-required').show();
+		} else {
+			$('#tax-id-required').hide();
+		}	
+	}
+});
+$('input[name=\'customer_group_id\']:checked').trigger('change');
+//--></script> 
 <script type="text/javascript"><!--
 // Sort the custom fields
 $('#account .form-group[data-sort]').detach().each(function() {
