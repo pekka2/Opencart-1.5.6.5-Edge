@@ -1033,7 +1033,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_group` (
 --
 
 INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `company_id_display`, `company_id_required`, `tax_id_display`, `tax_id_required`, `sort_order`) VALUES
-(1, 0, 1, 0, 0, 1, 1);
+(1, 0, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1710,6 +1710,7 @@ CREATE TABLE IF NOT EXISTS `oc_option_value` (
   `option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `option_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
+  `checked` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`option_value_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
