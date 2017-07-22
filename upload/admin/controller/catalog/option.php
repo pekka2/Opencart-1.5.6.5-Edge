@@ -284,7 +284,7 @@ class ControllerCatalogOption extends Controller {
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_option_value'] = $this->language->get('entry_option_value');
 		$this->data['entry_image'] = $this->language->get('entry_image');
-        $this->data['entry_checked'] = $this->language->get('entry_checked');
+                $this->data['entry_checked'] = $this->language->get('entry_checked');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -402,7 +402,7 @@ class ControllerCatalogOption extends Controller {
 			$this->data['option_values'][] = array(
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
-                'checked'                  => $option_value['checked'],
+                                'checked'                  => $option_value['checked'],
 				'image'                    => $image,
 				'thumb'                    => $this->model_tool_image->resize($image, 100, 100),
 				'sort_order'               => $option_value['sort_order']
