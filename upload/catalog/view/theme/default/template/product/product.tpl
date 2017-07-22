@@ -197,7 +197,11 @@
               <select name="option[<?php echo $option['product_option_id']; ?>]" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control">
                 <option value=""><?php echo $text_select; ?></option>
                 <?php foreach ($option['option_value'] as $option_value) { ?>
-                <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
+                  <?php if($option_value['checked'] == 1){?>
+                       <option value="<?php echo $option_value['product_option_value_id']; ?>" selected="selected"><?php echo $option_value['name']; ?>
+                  <?php } else {?>
+                       <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
+                  <?php } ?>
                 <?php if ($option_value['price']) { ?>
                 (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
                 <?php } ?>
@@ -213,7 +217,11 @@
                 <?php foreach ($option['option_value'] as $option_value) { ?>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" />
+                    <?php if($option_value['checked'] == 1){ ?>
+                                <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>"  checked="checked"/>
+                  <?php  } else {?>
+                            <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" />
+                  <?php  } ?>
                     <?php echo $option_value['name']; ?>
                     <?php if ($option_value['price']) { ?>
                     (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
@@ -249,7 +257,11 @@
                 <?php foreach ($option['product_option_value'] as $option_value) { ?>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" />
+                    <?php if($option_value['checked'] == 1){ ?>
+                            <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>"  checked="checked"/>
+                    <?php  } else {?>
+                            <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" />
+                    <?php  } ?>
                     <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> <?php echo $option_value['name']; ?>
                     <?php if ($option_value['price']) { ?>
                     (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
