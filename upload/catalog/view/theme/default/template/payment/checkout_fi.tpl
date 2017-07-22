@@ -30,7 +30,7 @@ $('#button-complete').click(function() {
               $('#checkout-fi-box').css({"width":"80%"});
               $('#checkout-fi-box').css({"height":"auto"});
               $('#checkout-fi-box').css({"margin-left":"10%"});
-              $('#checkout-fi-box').css({"top":"0"});
+              $('#checkout-fi-box').css({"top":"-90px"});
               $('#checkout-fi-box').css({"z-index":"1000"});
               $('#checkout-fi-box').html(json);
               $('#checkout-fi-box').css({"padding":"25px"});
