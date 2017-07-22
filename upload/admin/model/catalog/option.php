@@ -134,7 +134,7 @@ class ModelCatalogOption extends Model {
 				'option_value_id' => $option_value['option_value_id'],
 				'name'            => $option_value['name'],
 				'image'           => $option_value['image'],
-                'checked'         => $option_value['checked'],
+                                'checked'         => $option_value['checked'],
 				'sort_order'      => $option_value['sort_order']
 			);
 		}
@@ -160,7 +160,7 @@ class ModelCatalogOption extends Model {
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value_description_data,
 				'image'                    => $option_value['image'],
-                'checked'                  => $option_value['checked'],
+                                'checked'                  => $option_value['checked'],
 				'sort_order'               => $option_value['sort_order']
 			);
 		}
