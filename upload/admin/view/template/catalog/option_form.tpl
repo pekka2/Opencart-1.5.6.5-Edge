@@ -99,6 +99,9 @@
             <tr>
               <td class="left"><span class="required">*</span> <?php echo $entry_option_value; ?></td>
               <td class="left"><?php echo $entry_image; ?></td>
+                <?php if ($type == 'radio' || $type == 'select') { ?>
+                    <td class="right"><?php echo $entry_checked; ?></td>
+                 <?php } ?>
               <td class="right"><?php echo $entry_sort_order; ?></td>
               <td></td>
             </tr>
@@ -119,6 +122,16 @@
                   <input type="hidden" name="option_value[<?php echo $option_value_row; ?>][image]" value="<?php echo $option_value['image']; ?>" id="image<?php echo $option_value_row; ?>"  />
                   <br />
                   <a onclick="image_upload('image<?php echo $option_value_row; ?>', 'thumb<?php echo $option_value_row; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $option_value_row; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $option_value_row; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+
+              <?php if ($type == 'radio' || $type == 'select') { ?>
+                    <td class="right">
+                      <?php    if($option_values[$option_value_row]['checked'] == 1){?>
+                       <input type="checkbox" name="option_value[<?php echo $option_value_row; ?>][checked]" value="1" checked="checked"/>
+                     <?php } else { ?>
+                      <input type="checkbox" name="option_value[<?php echo $option_value_row; ?>][checked]" value="1"/>
+                      <?php } ?>
+                      </td>
+              <?php } ?>
               <td class="right"><input type="text" name="option_value[<?php echo $option_value_row; ?>][sort_order]" value="<?php echo $option_value['sort_order']; ?>" size="1" /></td>
               <td class="left"><a onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
             </tr>
@@ -127,7 +140,11 @@
           <?php } ?>
           <tfoot>
             <tr>
-              <td colspan="3"></td>
+                <?php if ($type == 'radio' || $type == 'select') { ?>
+                   <td colspan="4"></td>
+                 <?php } else {?>
+                   <td colspan="3"></td>
+                 <?php } ?>
               <td class="left"><a onclick="addOptionValue();" class="button"><?php echo $button_add_option_value; ?></a></td>
             </tr>
           </tfoot>
@@ -158,7 +175,7 @@ function addOptionValue() {
     <?php } ?>
 	html += '    </td>';
     html += '    <td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" id="thumb' + option_value_row + '" /><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="image' + option_value_row + '" /><br /><a onclick="image_upload(\'image' + option_value_row + '\', \'thumb' + option_value_row + '\');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$(\'#thumb' + option_value_row + '\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(\'#image' + option_value_row + '\').attr(\'value\', \'\');"><?php echo $text_clear; ?></a></div></td>';
-	html += '    <td class="right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" size="1" /></td>';
+		html += '    <td style="text-align:center"><input type="checkbox" name="option_value[' + option_value_row + '][checked]" value="1" /></td>';
 	html += '    <td class="left"><a onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '  </tr>';	
     html += '</tbody>';
