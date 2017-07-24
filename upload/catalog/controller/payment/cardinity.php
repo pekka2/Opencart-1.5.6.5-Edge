@@ -9,7 +9,6 @@
 require_once(DIR_PAYMENT.'cardinity/OAuthStore.php');
 require_once(DIR_PAYMENT.'cardinity/OAuthRequester.php');
 
-
 class ControllerPaymentCardinity extends Controller {
 	
 	private $error = array();
@@ -138,7 +137,6 @@ class ControllerPaymentCardinity extends Controller {
 
 	}
 
-
 	private function finalizePayment($order_id, $data) {
 			$query = $this->db->query("SELECT payment_id FROM `".DB_PREFIX."cardinity` WHERE order_id = '".$order_id."' LIMIT 1");
 			$payment_id = $query->row['payment_id'];
@@ -158,7 +156,6 @@ class ControllerPaymentCardinity extends Controller {
 			}
 
 	}
-
 
 	protected function validateForm() {
 
@@ -182,7 +179,6 @@ class ControllerPaymentCardinity extends Controller {
 			return false;
 		}
 	}
-
 
 	private function getProcessForm() {
 
@@ -327,7 +323,6 @@ class ControllerPaymentCardinity extends Controller {
 		}
 	}
 
-
 	private function makeRequest($data, $url = 'https://api.cardinity.com/v1/payments', $method = 'POST') {
 
 	$options = array(
@@ -365,7 +360,6 @@ class ControllerPaymentCardinity extends Controller {
 
 		return $response_data;
 	}
-
 
 	private function confirm($order_id, $payment_id) {
 		$this->load->model('checkout/order');
