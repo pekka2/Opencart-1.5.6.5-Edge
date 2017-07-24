@@ -10,5 +10,6 @@ Features:
 * Css style change for basic module boxes
 * Cardinity Payment Gateway
 * Checkout FI Payment Gateway
+* eWay Payment Gateway
 * Product Option Checked
 * Full Responsive
