@@ -119,9 +119,9 @@ require_once(DIR_SYSTEM . 'library/request.php');
 require_once(DIR_SYSTEM . 'library/response.php');
 require_once(DIR_SYSTEM . 'library/session.php');
 require_once(DIR_SYSTEM . 'library/template.php');
-require_once(DIR_SYSTEM . 'library/openbay.php');
-require_once(DIR_SYSTEM . 'library/ebay.php');
-require_once(DIR_SYSTEM . 'library/amazon.php');
-require_once(DIR_SYSTEM . 'library/amazonus.php');
-require_once(DIR_SYSTEM . 'library/checkoutfi.php');
+require_once(DIR_PAYMENT . 'openbay.php');
+require_once(DIR_PAYMENT . 'ebay.php');
+require_once(DIR_PAYMENT . 'amazon.php');
+require_once(DIR_PAYMENT . 'amazonus.php');
+require_once(DIR_PAYMENT . 'checkoutfi.php');
 ?>
