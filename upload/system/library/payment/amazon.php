@@ -1,17 +1,17 @@
 <?php
-class Amazonus {
+class Amazon {
 	private $token;
 	private $encPass;
 	private $encSalt;
-	private $server = 'http://us-amazon.openbaypro.com/';
+	private $server = 'http://uk-amazon.openbaypro.com/';
 	private $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
 
-		$this->token   = $registry->get('config')->get('openbay_amazonus_token');
-		$this->encPass = $registry->get('config')->get('openbay_amazonus_enc_string1');
-		$this->encSalt = $registry->get('config')->get('openbay_amazonus_enc_string2');
+		$this->token   = $registry->get('config')->get('openbay_amazon_token');
+		$this->encPass = $registry->get('config')->get('openbay_amazon_enc_string1');
+		$this->encSalt = $registry->get('config')->get('openbay_amazon_enc_string2');
 
 	}
 
@@ -20,30 +20,30 @@ class Amazonus {
 	}
 
 	public function orderNew($orderId) {
-		if ($this->config->get('amazonus_status') != 1) {
+		if ($this->config->get('amazon_status') != 1) {
 			return;
 		}
 
 		/* Is called from front-end? */
 		if (!defined('HTTPS_CATALOG')) {
-			$this->load->model('openbay/amazonus_order');
-			$amazonusOrderId = $this->model_openbay_amazonus_order->getAmazonusOrderId($orderId);
+			$this->load->model('openbay/amazon_order');
+			$amazonOrderId = $this->model_openbay_amazon_order->getAmazonOrderId($orderId);
 
 			$this->load->library('log');
-			$logger = new Log('amazonus_stocks.log');
+			$logger = new Log('amazon_stocks.log');
 			$logger->write('orderNew() called with order id: ' . $orderId);
 
 			//Stock levels update
-			if ($this->openbay->addonLoad('openstock') == true) {
+			if ($this->openbay->addonLoad('openstock')) {
 				$logger->write('openStock found installed.');
 
 				$osProducts = $this->osProducts($orderId);
 				$logger->write(print_r($osProducts, true));
 				$quantityData = array();
 				foreach ($osProducts as $osProduct) {
-					$amazonusSkuRows = $this->getLinkedSkus($osProduct['pid'], $osProduct['var']);
-					foreach($amazonusSkuRows as $amazonusSkuRow) {
-						$quantityData[$amazonusSkuRow['amazonus_sku']] = $osProduct['qty_left'];
+					$amazonSkuRows = $this->getLinkedSkus($osProduct['pid'], $osProduct['var']);
+					foreach($amazonSkuRows as $amazonSkuRow) {
+						$quantityData[$amazonSkuRow['amazon_sku']] = $osProduct['qty_left'];
 					}
 				}
 				if(!empty($quantityData)) {
@@ -65,16 +65,16 @@ class Amazonus {
 	}
 
 	public function productUpdateListen($productId, $data) {
-		$logger = new Log('amazonus_stocks.log');
+		$logger = new Log('amazon_stocks.log');
 		$logger->write('productUpdateListen called for product id: ' . $productId);
 
 		if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
 			$logger->write('openStock found installed and product has options.');
 			$quantityData = array();
 			foreach($data['product_option_stock'] as $optStock) {
-				$amazonusSkuRows = $this->getLinkedSkus($productId, $optStock['var']);
-				foreach($amazonusSkuRows as $amazonusSkuRow) {
-					$quantityData[$amazonusSkuRow['amazonus_sku']] = $optStock['stock'];
+				$amazonSkuRows = $this->getLinkedSkus($productId, $optStock['var']);
+				foreach($amazonSkuRows as $amazonSkuRow) {
+					$quantityData[$amazonSkuRow['amazon_sku']] = $optStock['stock'];
 				}
 			}
 			if(!empty($quantityData)) {
@@ -92,7 +92,7 @@ class Amazonus {
 
 	public function updateOrder($orderId, $orderStatusString, $courier_id = '', $courierFromList = true, $tracking_no = '') {
 
-		if ($this->config->get('amazonus_status') != 1) {
+		if ($this->config->get('amazon_status') != 1) {
 			return;
 		}
 
@@ -101,26 +101,26 @@ class Amazonus {
 			return;
 		}
 
-		$amazonusOrder = $this->getOrder($orderId);
+		$amazonOrder = $this->getOrder($orderId);
 
-		if(!$amazonusOrder) {
+		if(!$amazonOrder) {
 			return;
 		}
 
-		$amazonusOrderId = $amazonusOrder['amazonus_order_id'];
+		$amazonOrderId = $amazonOrder['amazon_order_id'];
 
 
-		$log = new Log('amazonus.log');
-		$log->write("Order's $amazonusOrderId status changed to $orderStatusString");
+		$log = new Log('amazon.log');
+		$log->write("Order's $amazonOrderId status changed to $orderStatusString");
 
 
-		$this->load->model('openbay/amazonus');
-		$amazonusOrderProducts = $this->model_openbay_amazonus->getAmazonusOrderedProducts($orderId);
+		$this->load->model('openbay/amazon');
+		$amazonOrderProducts = $this->model_openbay_amazon->getAmazonOrderedProducts($orderId);
 
 
 		$requestNode = new SimpleXMLElement('<Request/>');
 
-		$requestNode->addChild('AmazonusOrderId', $amazonusOrderId);
+		$requestNode->addChild('AmazonOrderId', $amazonOrderId);
 		$requestNode->addChild('Status', $orderStatusString);
 
 		if(!empty($courier_id)) {
@@ -134,9 +134,9 @@ class Amazonus {
 
 		$orderItemsNode = $requestNode->addChild('OrderItems');
 
-		foreach ($amazonusOrderProducts as $product) {
+		foreach ($amazonOrderProducts as $product) {
 			$newOrderItem = $orderItemsNode->addChild('OrderItem');
-			$newOrderItem->addChild('ItemId', htmlspecialchars($product['amazonus_order_item_id']));
+			$newOrderItem->addChild('ItemId', htmlspecialchars($product['amazon_order_item_id']));
 			$newOrderItem->addChild('Quantity', (int)$product['quantity']);
 		}
 
@@ -145,7 +145,7 @@ class Amazonus {
 		$doc->loadXML($requestNode->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_openbay_amazonus->updateAmazonusOrderTracking($orderId, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
+		$this->model_openbay_amazon->updateAmazonOrderTracking($orderId, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->callWithResponse('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");
@@ -210,7 +210,7 @@ class Amazonus {
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,
 			CURLOPT_URL => $this->server . $method,
-			CURLOPT_USERAGENT => 'OpenBay Pro for Amazonus/Opencart',
+			CURLOPT_USERAGENT => 'OpenBay Pro for Amazon/Opencart',
 			CURLOPT_FRESH_CONNECT => 1,
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_FORBID_REUSE => 1,
@@ -242,7 +242,7 @@ class Amazonus {
 			CURLOPT_POST            => 1,
 			CURLOPT_HEADER          => 0,
 			CURLOPT_URL             => $this->server . $method,
-			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazonus/Opencart',
+			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
 			CURLOPT_FRESH_CONNECT   => 1,
 			CURLOPT_RETURNTRANSFER  => 1,
 			CURLOPT_FORBID_REUSE    => 1,
@@ -356,20 +356,20 @@ class Amazonus {
 
 	public function putStockUpdateBulk($productIdArray, $endInactive = false){
 		$this->load->library('log');
-		$logger = new Log('amazonus_stocks.log');
+		$logger = new Log('amazon_stocks.log');
 		$logger->write('Updating stock using putStockUpdateBulk()');
 		$quantityData = array();
 		foreach($productIdArray as $productId) {
-			$amazonusRows = $this->getLinkedSkus($productId);
-			foreach($amazonusRows as $amazonusRow) {
+			$amazonRows = $this->getLinkedSkus($productId);
+			foreach($amazonRows as $amazonRow) {
 				$productRow = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product`
 					WHERE `product_id` = '" . (int)$productId . "'")->row;
 
 				if(!empty($productRow)) {
 					if($endInactive && $productRow['status'] == '0') {
-						$quantityData[$amazonusRow['amazonus_sku']] = 0;
+						$quantityData[$amazonRow['amazon_sku']] = 0;
 					} else {
-						$quantityData[$amazonusRow['amazonus_sku']] = $productRow['quantity'];
+						$quantityData[$amazonRow['amazon_sku']] = $productRow['quantity'];
 					}
 				}
 			}
@@ -384,10 +384,7 @@ class Amazonus {
 	}
 
 	public function getLinkedSkus($productId, $var='') {
-		return $this->db->query("SELECT `amazonus_sku`
-			FROM `" . DB_PREFIX . "amazonus_product_link`
-			WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $this->db->escape($var) . "'
-			")->rows;
+		return $this->db->query("SELECT `amazon_sku` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
 	}
 
 	public function getOrderdProducts($orderId) {
@@ -427,9 +424,11 @@ class Amazonus {
 
 						$var = implode(':', $pOptions);
 						$qtyLeftRow = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
+
 						if(empty($qtyLeftRow)) {
 							$qtyLeftRow['stock'] = 0;
 						}
+
 						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $qtyLeftRow['stock'], 'var' => $var);
 					}
 				} else {
@@ -442,10 +441,10 @@ class Amazonus {
 	}
 
 	public function validate(){
-		if($this->config->get('amazonus_status') != 0 &&
-			$this->config->get('openbay_amazonus_token') != '' &&
-			$this->config->get('openbay_amazonus_enc_string1') != '' &&
-			$this->config->get('openbay_amazonus_enc_string2') != ''){
+		if($this->config->get('amazon_status') != 0 &&
+			$this->config->get('openbay_amazon_token') != '' &&
+			$this->config->get('openbay_amazon_enc_string1') != '' &&
+			$this->config->get('openbay_amazon_enc_string2') != ''){
 			return true;
 		}else{
 			return false;
@@ -453,7 +452,7 @@ class Amazonus {
 	}
 
 	public function deleteProduct($product_id){
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
 	}
 
 	public function deleteOrder($order_id){
@@ -463,7 +462,7 @@ class Amazonus {
 	}
 
 	public function getOrder($orderId) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_order` WHERE `order_id` = '".(int)$orderId."' LIMIT 1");
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_order` WHERE `order_id` = '".(int)$orderId."' LIMIT 1");
 
 		if($qry->num_rows > 0){
 			return $qry->row;
@@ -557,7 +556,7 @@ class Amazonus {
 			$fields[$index]['unordered_index'] = $index;
 		}
 
-		usort($fields, array('Amazonus','compareFields'));
+		usort($fields, array('Amazon','compareFields'));
 
 		return array(
 			'category' => $category,
