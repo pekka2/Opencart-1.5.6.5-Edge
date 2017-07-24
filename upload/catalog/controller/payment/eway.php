@@ -19,11 +19,7 @@ class ControllerPaymentEway extends Controller {
 //        error_reporting(E_ALL);
 //        ini_set("display_errors", 1);
 
-	if (defined("JPATH_MIJOSHOP_OC")) {
-	    require_once(JPATH_MIJOSHOP_OC . '/catalog/controller/payment/lib/eWAY/RapidAPI.php');
-	} else {
-	    require_once(DIR_APPLICATION . '/controller/payment/lib/eWAY/RapidAPI.php');
-	}
+	require_once(DIR_APPLICATION . '/controller/payment/lib/eWAY/RapidAPI.php');
 
         // Create Access Code Request Object
         $request = new eWAY\CreateAccessCodeRequest();
