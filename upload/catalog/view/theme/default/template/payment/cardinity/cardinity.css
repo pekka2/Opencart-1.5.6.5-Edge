@@ -1,0 +1,20 @@
+body {
+	font-weight: 400;
+	color: #666;
+	font-size: 12px;
+	line-height: 20px;
+}
+h2, h3 { color: #444; }
+h2 {	font-size: 27px; }
+h3 {	font-size: 16px; }
+p { font-size: 12px; }
+.header {margin: 15px 0px;}
+.main {width: 700px;}
+.pl0 {padding-left: 0px;}
+.pr0 {padding-right: 0px;}
+.cvc-info p {font-size: 11px;}
+#pay { min-width: 150px; }
+.required {color: red; font-weight: 800;}
+.cvc-link {margin-left: 5px; font-size: 11px; text-decoration: underline; cursor:pointer;}
+a:hover {text-decoration: none;}
+.order-total {font-size: 13px; padding-right: 15px;}
