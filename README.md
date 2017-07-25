@@ -12,5 +12,6 @@ Features:
 * Cardinity Payment Gateway
 * Checkout FI Payment Gateway
 * eWay Payment Gateway
+* First Data Payment Gateway
 * Product Option Checked
 * Full Responsive
