@@ -1206,53 +1206,50 @@ function addOptionValue(option_row) {
 var discount_row = <?php echo $discount_row; ?>;
 
 function addDiscount() {
-	html  = '<tbody id="discount-row' + discount_row + '">';
-	html += '  <tr>'; 
+    html  = '<tbody id="discount-row' + discount_row + '">';
+    html += '  <tr>'; 
     html += '    <td class="left"><select name="product_discount[' + discount_row + '][customer_group_id]">';
-    <?php foreach ($customer_groups as $customer_group) { ?>
+<?php foreach ($customer_groups as $customer_group) { ?>
     html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo addslashes($customer_group['name']); ?></option>';
-    <?php } ?>
+<?php } ?>
     html += '    </select></td>';		
     html += '    <td class="right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" size="2" /></td>';
     html += '    <td class="right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" size="2" /></td>';
-	html += '    <td class="right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" /></td>';
+    html += '    <td class="right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" /></td>';
     html += '    <td class="left"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" class="date" /></td>';
-	html += '    <td class="left"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" class="date" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#discount-row' + discount_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';	
+    html += '    <td class="left"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" class="date" /></td>';
+    html += '    <td class="left"><a onclick="$(\'#discount-row' + discount_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
+    html += '  </tr>';	
     html += '</tbody>';
 	
-	$('#discount tfoot').before(html);
-		
-	$('#discount-row' + discount_row + ' .date').datepicker({dateFormat: 'yy-mm-dd'});
-	
-	discount_row++;
+    $('#discount tfoot').before(html);		
+    $('#discount-row' + discount_row + ' .date').datepicker({dateFormat: 'yy-mm-dd'});	
+    discount_row++;
 }
 //--></script> 
 <script type="text/javascript"><!--
 var special_row = <?php echo $special_row; ?>;
 
 function addSpecial() {
-	html  = '<tbody id="special-row' + special_row + '">';
-	html += '  <tr>'; 
+    html  = '<tbody id="special-row' + special_row + '">';
+    html += '  <tr>'; 
     html += '    <td class="left"><select name="product_special[' + special_row + '][customer_group_id]">';
-    <?php foreach ($customer_groups as $customer_group) { ?>
+   <?php foreach ($customer_groups as $customer_group) { ?>
     html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo addslashes($customer_group['name']); ?></option>';
-    <?php } ?>
+   <?php } ?>
     html += '    </select></td>';		
     html += '    <td class="right"><input type="text" name="product_special[' + special_row + '][priority]" value="" size="2" /></td>';
-	html += '    <td class="right"><input type="text" name="product_special[' + special_row + '][price]" value="" /></td>';
+    html += '    <td class="right"><input type="text" name="product_special[' + special_row + '][price]" value="" /></td>';
     html += '    <td class="left"><input type="text" name="product_special[' + special_row + '][date_start]" value="" class="date" /></td>';
-	html += '    <td class="left"><input type="text" name="product_special[' + special_row + '][date_end]" value="" class="date" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#special-row' + special_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';
+    html += '    <td class="left"><input type="text" name="product_special[' + special_row + '][date_end]" value="" class="date" /></td>';
+    html += '    <td class="left"><a onclick="$(\'#special-row' + special_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
+    html += '  </tr>';
     html += '</tbody>';
 	
-	$('#special tfoot').before(html);
- 
-	$('#special-row' + special_row + ' .date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#special tfoot').before(html);
+    $('#special-row' + special_row + ' .date').datepicker({dateFormat: 'yy-mm-dd'});
 	
-	special_row++;
+    special_row++;
 }
 //--></script> 
 <script type="text/javascript"><!--
