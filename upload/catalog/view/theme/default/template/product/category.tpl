@@ -32,14 +32,14 @@
       <div class="row">
         <div class="col-sm-12">
           
-            <?php foreach ($categories as $category) { ?>
+     <?php foreach ($categories as $category) { ?>
             
-<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-<?php if($oc2_theme_refine_search){
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <?php if($oc2_theme_refine_search){
 	$style = '  style="min-height:120px;"';
-} else{
-$style = '';
-} ?>
+    } else{
+       $style = '';
+    } ?>
     <div class="product-thumb transition"<?php echo $style;?>>
       <div class="image"><a href="<?php echo $category['href']; ?>">
       <?php if(isset($category['image'])){?>
@@ -57,7 +57,7 @@ $style = '';
         <?php foreach (array_chunk($categories, ceil(count($categories) / 1)) as $categories) { ?>
         <div class="col-sm-12">
           
-            <?php foreach ($categories as $category) { ?>
+       <?php foreach ($categories as $category) { ?>
             
 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="product-thumb transition" style="min-height:120px;">
