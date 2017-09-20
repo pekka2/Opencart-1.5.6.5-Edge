@@ -88,6 +88,8 @@ class ControllerStep3 extends Controller {
 			$this->redirect($this->url->link('step_4'));
 		}
 
+		$this->data['php_version'] = phpversion();
+
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
