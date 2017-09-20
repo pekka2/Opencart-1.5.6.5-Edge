@@ -20,7 +20,9 @@
           <td>Database Driver:</td>
           <td><select name="db_driver">
               <option value="mysqli" selected="selected">MySQLi</option>
+              <?php if(version_compare($php_version,'7','<')){?>
               <option value="mysql">MySQL</option>
+              <?php }?>
             </select>
             <br />
             <?php if ($error_db_driver) { ?>
