@@ -19,7 +19,7 @@
         <tr>
           <td>Database Driver:</td>
           <td><select name="db_driver">
-              <option value="mysqli">MySQLi</option>
+              <option value="mysqli" selected="selected">MySQLi</option>
               <option value="mysql">MySQL</option>
             </select>
             <br />
