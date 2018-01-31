@@ -3,7 +3,7 @@
 	<id>Themeglobal to Opencart 1.5.6.5 Edge</id>
 	<version>1.0</version>
 	<vqmver required="true">2.4.0</vqmver>
-	<author>digital-atelier.com</author>
+	<author>peku</author>
 	
 	<file path="catalog/controller/common/" name="header.php">
 		<operation>
