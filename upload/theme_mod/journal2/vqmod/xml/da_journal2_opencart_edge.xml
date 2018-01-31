@@ -3,7 +3,7 @@
 	<id>Journal2 to Opencart 1.5.6.5 Edge</id>
 	<version>1</version>
 	<vqmver required="true">2.4.0</vqmver>
-	<author>digital-atelier.com</author>
+	<author>peku</author>
 	
 	<file path="catalog/controller/journal2/" name="settings.php">
 		<operation>
