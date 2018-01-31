@@ -1,1 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Journal2 System Front</id>
+	<version>1.4.x and 1.5.x</version>
+	<vqmver required="true">2.4.0</vqmver>
+	<author>digital-atelier.com</author>
+	
+	<file path="catalog/controller/common/" name="header.php">
+		<operation>
+			<search position="before"><![CDATA[// Menu]]></search>
+			<add><![CDATA[
+		// Search
+		if (isset($this->request->get['search'])) {
+			$this->data['search'] = $this->request->get['search'];
+		} else {
+			$this->data['search'] = '';
+		}
+]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[  'common/search',]]></search>
+			<add><![CDATA[/* 'common/search', */]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/themeglobal/template/common/" name="header.tpl">
+		<operation>
+			<search position="replace"><![CDATA[view/javascript/]]></search>
+			<add><![CDATA[view/js-1.5.6/]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/common/" name="currency.php">
+		<operation>
+			<search position="replace"><![CDATA[common/currency.tpl]]></search>
+			<add><![CDATA[module/currency.tpl]]></add>
+		</operation>
+	</file>
+
+</modification>
 
