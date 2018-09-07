@@ -13,7 +13,7 @@ class ModelModuleModule extends Model {
 			$ms = array();
 			foreach($modules as $module){		
 					foreach($module as $array){	
-					 	   if(count($array[0]) > 0 && is_array($array)){
+					 	   if (is_array($array) && count($array[0]) > 0) {
 								for($i = 0; $i<count($array[0]); $i++){
 									if( isset($array[0][$i]['layout_id']) ){
 									    $ms[$array[0][$i]['layout_id']][] = array("name"=> $module['name'], "position" => $array[0][$i]['position']);
