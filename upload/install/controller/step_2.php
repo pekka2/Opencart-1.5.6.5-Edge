@@ -63,7 +63,7 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
 		}
 
-		if (!function_exists('mcrypt_encrypt')) {
+		if (version_compare(PHP_VERSION,'7.2','<') && !function_exists('mcrypt_encrypt')) {
 			$this->error['warning'] = 'Warning: mCrypt extension needs to be loaded for OpenCart to work!';
 		}
 
