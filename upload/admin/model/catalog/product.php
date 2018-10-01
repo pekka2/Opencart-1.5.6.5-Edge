@@ -464,11 +464,6 @@ class ModelCatalogProduct extends Model {
 	}	
 
 	public function getTotalProducts($data = array()) {
-		if ($this->customer->isLogged()) {
-			$customer_group_id = $this->customer->getCustomerGroupId();
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}	
 
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total"; 
 
