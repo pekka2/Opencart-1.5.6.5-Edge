@@ -2,8 +2,6 @@
 class ModelModuleModule extends Model {
 	public function getPositions($data) {
             $results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` LIKE '%module%' AND `serialized` = '1'");  
-
-                 
 				$modules = array();
 			foreach($results->rows as $result){
 				if($result['key'] !='pp_layout_module' && $result['key'] !='amazon_checkout_layout_module'){
