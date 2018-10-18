@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentCheckoutFi extends Controller {
-	public function index() {
+  public function index() {
 		$this->data = array();
 		$this->data = array_merge($this->data,$this->load->language('payment/checkout_fi'));
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -14,8 +14,8 @@ class ControllerPaymentCheckoutFi extends Controller {
     } 
 
     $this->render(); 
-	}
-	public function complete(){
+  }
+  public function complete(){
         $json = '';
 
         $co = new CheckoutFi($this->config->get('checkout_fi_merchant'), $this->config->get('checkout_fi_security'));
@@ -72,13 +72,13 @@ class ControllerPaymentCheckoutFi extends Controller {
         }
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
-	}
-	public function callback() {
-                $this->load->model('checkout/order');
+  }
+  public function callback() {
+            $this->load->model('checkout/order');
          
-			    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('checkout_fi_order_status_id'));
+	     $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('checkout_fi_order_status_id'));
              
-                $this->response->redirect($this->url->link('checkout/success'));
-	}
+             $this->response->redirect($this->url->link('checkout/success'));
+  }
 }
 ?>
