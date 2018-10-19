@@ -28,7 +28,9 @@ class ControllerCheckoutCart extends Controller {
 		if (isset($this->request->get['remove'])) {
 			$this->cart->remove($this->request->get['remove']);
 
-			unset($this->session->data['vouchers'][$this->request->get['remove']]);
+			if( isset($this->session->data['vouchers'][$this->request->get['remove']]) ){
+			    unset($this->session->data['vouchers'][$this->request->get['remove']]);
+			}
 
 			$this->session->data['success'] = $this->language->get('text_remove');
 
@@ -36,7 +38,9 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']); 
-			unset($this->session->data['reward']);  
+			if(isset($this->session->data['reward'])){
+			   unset($this->session->data['reward']);
+			}
 
 			$this->redirect($this->url->link('checkout/cart'));
 		}
