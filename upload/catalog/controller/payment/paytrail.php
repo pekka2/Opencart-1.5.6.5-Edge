@@ -268,7 +268,6 @@ class ControllerPaymentPaytrail extends Controller {
        }
 	public function cancel() {
           $this->language->load('payment/paytrail');
-           // Ladataan paluuarvot
         if(class_exists('log')){
         	$log = new Log("paytrail_log.txt");
         	$log->write($this->language->get('text_paid_cancel'));
