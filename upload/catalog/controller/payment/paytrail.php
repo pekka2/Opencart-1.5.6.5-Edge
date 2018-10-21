@@ -260,12 +260,12 @@ class ControllerPaymentPaytrail extends Controller {
         }    
             $this->redirect($this->url->link('checkout/success'));
 	}
-  public function confirm() {
-    if ($this->session->data['payment_method']['code'] == 'paytrail') {
-        $this->load->model('checkout/order');
-        $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_status_id'));
-    }
-  }
+        public function confirm() {
+         if ($this->session->data['payment_method']['code'] == 'paytrail') {
+           $this->load->model('checkout/order');
+           $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_status_id'));
+        }
+       }
 	public function cancel() {
           $this->language->load('payment/paytrail');
            // Ladataan paluuarvot
@@ -275,17 +275,17 @@ class ControllerPaymentPaytrail extends Controller {
         }
         $this->redirect($this->url->link('common/home'));
 	}
-  public function rounder($sum){
-    $round = round($sum,2);
-      if(strpos($round,'.')){
-        $parts = explode('.',$round);
-        if(strlen($parts[1]) == 1){
-            return $round . '0';
-        }
-          return $round;
-      } else {
-        return $round . '.00';
+       public function rounder($sum){
+          $round = round($sum,2);
+          if(strpos($round,'.')){
+              $parts = explode('.',$round);
+              if(strlen($parts[1]) == 1){
+                 return $round . '0';
+              }
+              return $round;
+          } else {
+              return $round . '.00';
+          }
       }
-  }
 }
 ?>
