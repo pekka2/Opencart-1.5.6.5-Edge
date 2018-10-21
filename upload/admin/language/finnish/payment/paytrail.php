@@ -5,6 +5,8 @@ $_['heading_title']      = 'Paytrail';
 // Text 
 $_['text_edit']          = 'Muokkaa';
 $_['text_payment']       = 'Maksutavat';
+$_['text_clear']         = 'Tyhjennä Paytrail loki';
+$_['text_clear_success']  = 'Lokitietojen tyhjennys onnistui!';
 $_['text_success']       = 'Maksutavan Paytrail muokkaaminen suoritettu!';
 $_['text_enabled']       = 'Käytössä';
       
@@ -12,14 +14,11 @@ $_['text_enabled']       = 'Käytössä';
 $_['entry_merchant_id']       = 'Myyjän tunniste';
 $_['entry_merchant_secret']   = 'Salausavain';
 $_['entry_order_status']      = 'Onnistuneen tilauksen tila';
-$_['entry_order_failed_status']      = 'Epäonnisuneen tilauksen tila';
+$_['entry_order_cancel_status']     = 'Keskeytyneen tilauksen tila';
 $_['entry_geo_zone']          = 'Maantiet. alue';
 $_['entry_status']            = 'Tila';
 $_['entry_sort_order']        = 'Järjestys';
-$_['entry_box_width']         = 'Valintasivun leveys';
-
-// Help
-$_['help_box_width']         = 'Kassalle upotettavan valintasivun leveys pikseleinä (kirjoitettava ainoastaan numeroina). Oletusleveys on 1109 pikseliä.';
+$_['entry_log']              = 'Loki';
 
 // Error
 $_['error_permission']   = 'Varoitus: Sinulla ei ole oikeuksia Paytrail maksutavan muokkaamiseen!';
