@@ -219,7 +219,11 @@ class ControllerPaymentPaytrail extends Controller {
     } else {
       $this->data['paid'] = true;
     }
-  }     
+  }  
+			$this->children = array(
+				'common/column_left',
+				'common/column_right'
+			);   
       
     if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paytrail.tpl')) {
       $this->template = $this->config->get('config_template') . '/template/payment/paytrail.tpl';
