@@ -12,7 +12,6 @@ $_['text_method_3']			= 'Danske Bank';
 $_['text_method_4']			= 'Tapiola';
 $_['text_method_5']			= 'Ålandsbanken';
 $_['text_method_6']			= 'Handelsbanken';
-$_['text_method_7']		    = '???';
 $_['text_method_8']			= 'Nets';
 $_['text_method_9']			= 'Paypal';
 $_['text_method_10']		= 'S-Pankki';
