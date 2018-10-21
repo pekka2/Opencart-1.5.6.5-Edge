@@ -341,7 +341,18 @@
            	  leveys = width-minus;
            }
            if(typeof leveys == "undefined"){
+           	 if(screenWidth > 1600){
+           	  leveys = 1410;
+           	 }
+           	 if(screenWidth > 1280){
            	  leveys = 1110;
+           	 }
+           	 if(screenWidth < 1280){
+           	  leveys = 900;
+           	 }
+           	 if(screenWidth < 1000){
+           	  leveys = 500;
+           	 }
            }
     <?php } ?>
      SV.widget.initWithForm('paytrail', {charset:'UTF-8',width:leveys});
