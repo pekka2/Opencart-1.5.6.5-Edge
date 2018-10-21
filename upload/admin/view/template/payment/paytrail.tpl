@@ -4,6 +4,7 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-bank-transfer" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="<?php echo $clear; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -49,6 +50,20 @@
                   <select name="paytrail_order_status_id" id="select-order_status" class="form-control">
                  <?php foreach ($order_statuses as $order_status) { ?>
                  <?php if ($order_status['order_status_id'] == $paytrail_order_status_id) { ?>
+                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                 <?php } else { ?>
+                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <?php } ?>
+              <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="select-order_status"><?php echo $entry_order_cancel_status; ?></label>
+                <div class="col-sm-10">
+                  <select name="paytrail_order_cancel_status_id" id="select-order_status" class="form-control">
+                 <?php foreach ($order_statuses as $order_status) { ?>
+                 <?php if ($order_status['order_status_id'] == $paytrail_order_cancel_status_id) { ?>
                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                  <?php } else { ?>
                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -106,6 +121,12 @@
 			  <input type="text" name="paytrail_sort_order" value="<?php echo $paytrail_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
 			</div>
 		  </div>
+      <div class="form-group">
+      <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_log; ?></label>
+      <div class="col-sm-10">
+       <textarea class="form-control" rows="10"><?php echo $log; ?></textarea>
+     </div>
+   </div>
     </form>
 
      </div>
