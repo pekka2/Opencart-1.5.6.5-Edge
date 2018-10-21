@@ -12,7 +12,7 @@ class ControllerPaymentPaytrail extends Controller {
 
     $this->data['journal_checkout'] = false;
 
-        if ($this->config->get('theme_default_directory') == 'journal2' && $this->journal2->settings->get('journal_checkout')) {
+        if ($this->config->get('config_template') == 'journal2' && $this->journal2->settings->get('journal_checkout')) {
           $this->data['journal_checkout'] = true;
         }
 
