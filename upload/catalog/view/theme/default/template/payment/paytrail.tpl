@@ -340,7 +340,7 @@
            	  minus = paddings+border+widgetPadding+padding_2;
            	  leveys = width-minus;
            }
-           if(undefined(leveys)){
+           if(typeof leveys == "undefined"){
            	  leveys = 1110;
            }
     <?php } ?>
