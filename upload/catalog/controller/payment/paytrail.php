@@ -215,23 +215,23 @@ class ControllerPaymentPaytrail extends Controller {
 
           $signature = $this->config->get('paytrail_merchant_secret');    
 
-            $this->data["AUTHCODE"] = strtoupper(hash('sha256', $signature . '|' . $this->data["MERCHANT_ID"] . '|' . $this->data["URL_SUCCESS"] . '|' . $this->data["URL_CANCEL"] . '|' . $this->data["ORDER_NUMBER"] . '|' . $this->data["PARAMS_IN"] . '|' . $this->data["PARAMS_OUT"] . $products_data . '|' . $this->data["MSG_UI_MERCHANT_PANEL"]   . '|' . $this->data["URL_NOTIFY"] . '|' . $this->data["LOCALE"] . '|' . $this->data["CURRENCY"] . '|' . $this->data["REFERENCE_NUMBER"] . '|' . $this->data["PAYMENT_METHODS"] . $payer_data . '|' . $this->data["AMOUNT"]  . '|' . $this->data["ALG"]));
-    } else {
-      $this->data['paid'] = true;
-    }
-  }  
+           $this->data["AUTHCODE"] = strtoupper(hash('sha256', $signature . '|' . $this->data["MERCHANT_ID"] . '|' . $this->data["URL_SUCCESS"] . '|' . $this->data["URL_CANCEL"] . '|' . $this->data["ORDER_NUMBER"] . '|' . $this->data["PARAMS_IN"] . '|' . $this->data["PARAMS_OUT"] . $products_data . '|' . $this->data["MSG_UI_MERCHANT_PANEL"]   . '|' . $this->data["URL_NOTIFY"] . '|' . $this->data["LOCALE"] . '|' . $this->data["CURRENCY"] . '|' . $this->data["REFERENCE_NUMBER"] . '|' . $this->data["PAYMENT_METHODS"] . $payer_data . '|' . $this->data["AMOUNT"]  . '|' . $this->data["ALG"]));
+          } else {
+              $this->data['paid'] = true;
+          }
+        }  
 			$this->children = array(
 				'common/column_left',
 				'common/column_right'
 			);   
       
-    if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paytrail.tpl')) {
-      $this->template = $this->config->get('config_template') . '/template/payment/paytrail.tpl';
-    } else {
-      $this->template = 'default/template/payment/paytrail.tpl';
-    }
+          if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paytrail.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/payment/paytrail.tpl';
+          } else {
+             $this->template = 'default/template/payment/paytrail.tpl';
+          }
 
-    $this->render();
+            $this->render();
 	}
 	public function callback() {
           $this->language->load('payment/paytrail');
