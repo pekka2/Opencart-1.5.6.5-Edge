@@ -261,8 +261,9 @@ class ControllerPaymentPaytrail extends Controller {
         }
        }
 	public function cancel() {
-          $this->language->load('payment/paytrail');
-            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('paytrail_order_failed_status_id'));
+            $this->language->load('payment/paytrail');
+            $this->load->model('checkout/order');
+            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('paytrail_order_cancel_status_id'));
             $log = new Log("paytrail_log.txt");
             $log->write($this->language->get('text_paid_cancel'));
             $this->redirect($this->url->link('common/home'));
