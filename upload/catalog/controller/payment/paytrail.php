@@ -47,7 +47,7 @@ class ControllerPaymentPaytrail extends Controller {
           $this->data["CURRENCY"] = "EUR";
           $this->data["ORDER_NUMBER"] = $this->language->get('text_order') . $this->session->data['order_id'];
           $this->data["URL_SUCCESS"] = $this->url->link('payment/paytrail/callback');
-          $this->data["URL_CANCEL"] = $this->url->link('checkout/cart');
+          $this->data["URL_CANCEL"] = $this->url->link('payment/paytrail/cancel');
           $this->data["URL_NOTIFY"] = $this->url->link('checkout/cart');
           $this->data["AMOUNT"] = round($total,2);
           $this->data["REFERENCE_NUMBER"] = "";
@@ -253,7 +253,11 @@ class ControllerPaymentPaytrail extends Controller {
             }
     
            /* $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = REPLACE(`payment_method`,'". $order_info['payment_method'] ."','" . $order_info['payment_method'] . " (" . $this->language->get('text_method_' . $method) . ")'), date_modified = NOW() WHERE order_id = '" . (int)$this->session->data['order_id'] . "'"); */ 
-           
+       
+        if(class_exists('log')){
+        	$log = new Log("paytrail_log.txt");
+        	$log->write($this->language->get('text_paid_success') . $this->language->get('text_method_' . $method));
+        }    
             $this->redirect($this->url->link('checkout/success'));
 	}
   public function confirm() {
@@ -262,6 +266,15 @@ class ControllerPaymentPaytrail extends Controller {
         $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_status_id'));
     }
   }
+	public function cancel() {
+          $this->language->load('payment/paytrail');
+           // Ladataan paluuarvot
+        if(class_exists('log')){
+        	$log = new Log("paytrail_log.txt");
+        	$log->write($this->language->get('text_paid_cancel'));
+        }
+        $this->redirect($this->url->link('common/home'));
+	}
   public function rounder($sum){
     $round = round($sum,2);
       if(strpos($round,'.')){
