@@ -248,16 +248,10 @@ class ControllerPaymentPaytrail extends Controller {
             $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = REPLACE(`payment_method`,'". $order_info['payment_method'] ."','" . $order_info['payment_method'] . " (" . $this->language->get('text_method_' . $method) . ")'), date_modified = NOW() WHERE order_id = '" . (int)$this->session->data['order_id'] . "'"); 
             if($status == "PAID"){
                $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_status_id'));
-            } else {
-               $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_failed_status_id'));              
-            }
+	    }
     
-           /* $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = REPLACE(`payment_method`,'". $order_info['payment_method'] ."','" . $order_info['payment_method'] . " (" . $this->language->get('text_method_' . $method) . ")'), date_modified = NOW() WHERE order_id = '" . (int)$this->session->data['order_id'] . "'"); */ 
-       
-        if(class_exists('log')){
         	$log = new Log("paytrail_log.txt");
         	$log->write($this->language->get('text_paid_success') . $this->language->get('text_method_' . $method));
-        }    
             $this->redirect($this->url->link('checkout/success'));
 	}
         public function confirm() {
@@ -268,11 +262,10 @@ class ControllerPaymentPaytrail extends Controller {
        }
 	public function cancel() {
           $this->language->load('payment/paytrail');
-        if(class_exists('log')){
-        	$log = new Log("paytrail_log.txt");
-        	$log->write($this->language->get('text_paid_cancel'));
-        }
-        $this->redirect($this->url->link('common/home'));
+            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('paytrail_order_failed_status_id'));
+            $log = new Log("paytrail_log.txt");
+            $log->write($this->language->get('text_paid_cancel'));
+            $this->redirect($this->url->link('common/home'));
 	}
        public function rounder($sum){
           $round = round($sum,2);
