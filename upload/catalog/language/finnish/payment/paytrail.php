@@ -2,7 +2,8 @@
 // Text
 $_['text_title']            = 'Paytrail';
 $_['text_gateway']          = 'Maksa verkosa';
-$_['text_paid_success']     = 'Maksu on suoritettu onnistuneesti!';
+$_['text_paid_success']     = 'Maksu on suoritettu onnistuneesti! Maksajan pankki: ';
+$_['text_paid_cancel']      = 'Maksun suorittaminen on keskeytetty.';
 $_['text_help_to_continue'] = 'Ole hyvä ja viimeistele tilaus lähettämällä yhteystietosi tällä sivulla olevalla lomakkeella.';
 $_['text_loading']          = 'Ladataan ...';
 $_['text_order']            = 'Tilaus nro ';
