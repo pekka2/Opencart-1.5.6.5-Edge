@@ -57,7 +57,8 @@ class ControllerPaymentPaytrail extends Controller {
       		'separator' => ' :: '
    		);
 				
-		$this->data['action'] = $this->url->link('payment/paytrail','token=' . $this->session->data['token'],'SSL');
+		$this->data['action'] = $this->url->link('payment/paytrail','token=' . $this->session->data['token'],'SSL');		
+		$this->data['clear'] = $this->url->link('payment/paytrail/clear','token=' . $this->session->data['token'],'SSL');
 		
 		$this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'],'SSL');
 		
@@ -112,6 +113,14 @@ class ControllerPaymentPaytrail extends Controller {
 			$this->data['paytrail_sort_order'] = $this->config->get('paytrail_sort_order');
 		}
 
+		$file = DIR_LOGS . 'paytrail_log.txt';
+
+		if (file_exists($file)) {
+			$this->data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+		} else {
+			$this->data['log'] = '';
+		}
+
 	
 		$this->template = 'payment/paytrail.tpl';
 		$this->children = array(
@@ -120,6 +129,20 @@ class ControllerPaymentPaytrail extends Controller {
 		);
 
 		$this->response->setOutput($this->render());
+	}
+
+	public function clear() {
+		$this->language->load('payment/paytrail');
+
+		$file = DIR_LOGS . 'paytrail_log.txt';
+
+		$handle = fopen($file, 'w+'); 
+
+		fclose($handle); 			
+
+		$this->session->data['success'] = $this->language->get('text_clear_success');
+
+		$this->redirect($this->url->link('payment/paytrail', 'token=' . $this->session->data['token'], 'SSL'));		
 	}
 
 	protected function validate() {
