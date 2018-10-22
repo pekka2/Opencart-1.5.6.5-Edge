@@ -237,12 +237,14 @@ class ControllerPaymentPaytrail extends Controller {
           $this->language->load('payment/paytrail');
 
            // Ladataan paluuarvot
-           $order_number = $this->request->get['ORDER_NUMBER']; 
-           $timestamp = $this->request->get['TIMESTAMP']; 
-           $method = $this->request->get['PAYMENT_METHOD'];
+           $payment_id = $this->request->get['PAYMENT_ID'];
            $status = $this->request->get['STATUS']; 
+           $amount = $this->request->get['AMOUNT'];
+           $method = $this->request->get['PAYMENT_METHOD'];
+           $return_authcode = $this->request->get['RETURN_AUTHCODE'];
 
             $this->load->model('checkout/order');
+         if(isset($this->session->data['order_id']) && strlen($return_authcode) > 50 && $amount > 0){
             $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
     
             $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = REPLACE(`payment_method`,'". $order_info['payment_method'] ."','" . $order_info['payment_method'] . " (" . $this->language->get('text_method_' . $method) . ")'), date_modified = NOW() WHERE order_id = '" . (int)$this->session->data['order_id'] . "'"); 
@@ -251,7 +253,8 @@ class ControllerPaymentPaytrail extends Controller {
 	    }
     
         	$log = new Log("paytrail_log.txt");
-        	$log->write($this->language->get('text_paid_success') . $this->language->get('text_method_' . $method));
+        	$log->write($this->language->get('text_paid_success') . $this->language->get('text_method_' . $method) . ', Payment ID: ' . $payment_id);
+           }
             $this->redirect($this->url->link('checkout/success'));
 	}
         public function confirm() {
@@ -263,9 +266,11 @@ class ControllerPaymentPaytrail extends Controller {
 	public function cancel() {
             $this->language->load('payment/paytrail');
             $this->load->model('checkout/order');
-            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('paytrail_order_cancel_status_id'));
+         if(isset($this->session->data['order_id'])){
+            $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_cancel_status_id'));
             $log = new Log("paytrail_log.txt");
             $log->write($this->language->get('text_paid_cancel'));
+	 }
             $this->redirect($this->url->link('common/home'));
 	}
        public function rounder($sum){
