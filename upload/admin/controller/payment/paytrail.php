@@ -136,13 +136,23 @@ class ControllerPaymentPaytrail extends Controller {
 
 		$file = DIR_LOGS . 'paytrail_log.txt';
 
+           if (file_exists($file) && $this->validateClear()) {
 		$handle = fopen($file, 'w+'); 
 
 		fclose($handle); 			
 
 		$this->session->data['success'] = $this->language->get('text_clear_success');
+	   }
 
 		$this->redirect($this->url->link('payment/paytrail', 'token=' . $this->session->data['token'], 'SSL'));		
+	}
+
+	protected function validateClear() {
+		if (!$this->user->hasPermission('modify', 'payment/paytrail')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
 	}
 
 	protected function validate() {
