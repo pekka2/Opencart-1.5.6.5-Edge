@@ -151,8 +151,33 @@
            	  minus = paddings+border+widgetPadding+padding_2;
            	  leveys = width/2-minus;
            }
-           if(undefined(leveys)){
-           	  leveys = 520;
+           if(typeof leveys == "undefined"){
+            if(screenWidth  < 751){
+              // responsive, page is full width
+              leveys = 650;
+            }
+            if(screenWidth  < 700){
+              // responsive, page is full width
+              leveys = 600;
+            }
+            if(screenWidth  < 600){
+              // responsive, page is full width
+              leveys = 480;
+            }
+            if(screenWidth  < 500){
+              // responsive, page is full width
+              leveys = 400;
+            }
+            if(screenWidth  < 400){
+              // responsive, page is full width
+              leveys = 320;
+            }
+            if(screenWidth  > 850){
+           	  leveys = 310;
+            }
+            if(screenWidth  > 950){
+              leveys = 410;
+            }
            }
     <?php } elseif ($column_left || $column_right) { ?>
            if(screenWidth == 1263){
@@ -251,8 +276,36 @@
            	  minus = paddings+border+widgetPadding+padding_2;
            	  leveys = width/4*3-minus;
            }
-           if(undefined(leveys)){
-           	  leveys = 850;
+           if(typeof leveys == "undefined"){
+            if(screenWidth  < 751){
+              // responsive, page is full width
+              leveys = 650;
+            }
+            if(screenWidth  < 700){
+              // responsive, page is full width
+              leveys = 600;
+            }
+            if(screenWidth  < 600){
+              // responsive, page is full width
+              leveys = 480;
+            }
+            if(screenWidth  < 500){
+              // responsive, page is full width
+              leveys = 400;
+            }
+            if(screenWidth  < 400){
+              // responsive, page is full width
+              leveys = 320;
+            }
+            if(screenWidth  > 850){
+              leveys = 500;
+            }
+            if(screenWidth  > 974){
+              leveys = 650;
+            }
+            if(screenWidth  > 1182){
+              leveys = 810;
+            }
            }
     <?php } else { ?>
            if(screenWidth == 1263){
@@ -341,17 +394,20 @@
            	  leveys = width-minus;
            }
            if(typeof leveys == "undefined"){
-           	 if(screenWidth > 1600){
-           	  leveys = 1410;
-           	 }
            	 if(screenWidth > 1280){
            	  leveys = 1110;
+           	 }
+           	 if(screenWidth > 1600){
+           	  leveys = 1410;
            	 }
            	 if(screenWidth < 1280){
            	  leveys = 900;
            	 }
            	 if(screenWidth < 1000){
            	  leveys = 500;
+           	 }
+           	 if(screenWidth < 700){
+           	  leveys = 400;
            	 }
            }
     <?php } ?>
