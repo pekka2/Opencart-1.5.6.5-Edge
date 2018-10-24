@@ -247,8 +247,9 @@ class ControllerPaymentPaytrail extends Controller {
          if(isset($this->session->data['order_id']) && strlen($return_authcode) > 50 && $amount > 0){
             $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
     
-            $this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . $this->config->get('paytrail_order_status_id') . "', `payment_method` = REPLACE(`payment_method`,'". $order_info['payment_method'] ."','" . $order_info['payment_method'] . " (" . $this->language->get('text_method_' . $method) . ")'), date_modified = NOW() WHERE order_id = '" . (int)$this->session->data['order_id'] . "'"); 
-    
+                $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = REPLACE(`payment_method`,'". $order_info['payment_method'] ."','" . $order_info['payment_method'] . " (" . $this->language->get('text_method_' . $method) . ")'), date_modified = NOW() WHERE order_id = '" . (int)$this->session->data['order_id'] . "'"); 
+
+                $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_status_id'));    
         	$log = new Log("paytrail_log.txt");
         	$log->write($this->language->get('text_paid_success') . $this->language->get('text_method_' . $method) . ', Payment ID: ' . $payment_id);
            }
@@ -264,8 +265,7 @@ class ControllerPaymentPaytrail extends Controller {
             $this->language->load('payment/paytrail');
             $this->load->model('checkout/order');
          if(isset($this->session->data['order_id'])){
-            $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-            $this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . $this->config->get('paytrail_order_cancel_status_id') . "', `payment_method` = REPLACE(`payment_method`,'". $order_info['payment_method'] ."','" . $order_info['payment_method'] . " (" . $this->language->get('text_method_' . $method) . ")'), date_modified = NOW() WHERE order_id = '" . (int)$this->session->data['order_id'] . "'"); 
+            $this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('paytrail_order_cancel_status_id'));
 
             $log = new Log("paytrail_log.txt");
             $log->write($this->language->get('text_paid_cancel'));
