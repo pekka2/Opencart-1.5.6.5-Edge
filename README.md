@@ -13,6 +13,7 @@ Features:
 * Checkout FI Payment Gateway
 * eWay Payment Gateway
 * First Data Payment Gateway
+* Paytrail Payment Gateway
 * Sisow Payment Gateway
 * Product Option Checked
 * Full Responsive
