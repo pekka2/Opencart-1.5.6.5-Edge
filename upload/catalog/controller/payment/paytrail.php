@@ -122,6 +122,7 @@ class ControllerPaymentPaytrail extends Controller {
                 $item++;
             }
 
+        if($this->cart->hasShipping()){
             $shipping = $this->model_payment_paytrail->getShipping($this->session->data['order_id']);
 
             if(!empty($shipping['title'])){
@@ -158,6 +159,7 @@ class ControllerPaymentPaytrail extends Controller {
                   $products_field .= ",ITEM_TYPE[$item]";
                 $item++;
             }
+	}
 
             $handling = $this->model_payment_paytrail->getHandling($this->session->data['order_id']);
  
