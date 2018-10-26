@@ -36,7 +36,7 @@ class ControllerPaymentPaybyway extends Controller {
         $this->data['action'] = $this->url->link('payment/paybyway','action=check-payment-status&token=', 'SSL');
         $this->data['payment_form'] = false;
         
-	    require(DIR_SYSTEM . 'library/bambora.php');
+	    require(DIR_SYSTEM . 'library/payment/bambora.php');
 
         $payForm = new Bambora\Payform($this->config->get('paybyway_api_key'), $this->config->get('paybyway_private_key'));
         // Start to Actions
