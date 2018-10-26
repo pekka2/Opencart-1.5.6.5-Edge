@@ -122,12 +122,10 @@ class ControllerPaymentPaytrail extends Controller {
                 $item++;
             }
 
-        if($this->cart->hasShipping()){
-            $shipping = $this->model_payment_paytrail->getShipping($this->session->data['order_id']);
+            $shipping_method = $this->model_payment_paytrail->findShipping($this->session->data['order_id']);
 
-            if(!empty($shipping['title'])){
-                // tax percent
-                $tax_rate = $this->model_payment_paytrail->taxShipping($this->session->data['order_id']);
+            if(!empty($shipping_method['shipping'])){
+               $shipping = $shipping_method['shipping'];
                   $this->data['products'][$item]["ITEM_TITLE"] = str_replace('<br/>', ', ', $shipping['title']);
                   $products_data .= '|' . str_replace('<br/>', ', ', $shipping['title']);
                   // productid
@@ -136,13 +134,13 @@ class ControllerPaymentPaytrail extends Controller {
 
                   $this->data['products'][$item]["ITEM_QUANTITY"] = 1;
                   $products_data .= '|1';
-                  $price_query_2 = $this->tax->calculate($shipping['value'], $product['tax_class_id'], true);
+                  $price_query_2 = $this->tax->calculate($shipping['price'], $shipping['tax_class_id'], true);
 
                   $shipping_price = $this->rounder($price_query_2);
                   $this->data['products'][$item]["ITEM_UNIT_PRICE"] = $shipping_price;
                   $products_data .= '|' . $shipping_price;
-                  $this->data['products'][$item]["ITEM_VAT_PERCENT"] = $tax_rate;
-                  $products_data .= '|' . $tax_rate;
+                  $this->data['products'][$item]["ITEM_VAT_PERCENT"] = $shipping['tax_rate'];
+                  $products_data .= '|' . $shipping['tax_rate'];
 
                   $this->data['products'][$item]["ITEM_DISCOUNT_PERCENT"] = 0;
                   $products_data .= '|0';
@@ -157,35 +155,60 @@ class ControllerPaymentPaytrail extends Controller {
                   $products_field .= ",ITEM_VAT_PERCENT[$item]";
                   $products_field .= ",ITEM_DISCOUNT_PERCENT[$item]";
                   $products_field .= ",ITEM_TYPE[$item]";
-                $item++;
+                  $item++;
             }
-	}
-
-            $handling = $this->model_payment_paytrail->getHandling($this->session->data['order_id']);
  
-            if(!empty($handling['title'])){
-                // tax percent
-              if($this->config->get('handling_status')){
-                  $tax_rate = $this->model_payment_paytrail->taxRate($this->config->get('handling_tax_class_id'));
-              } elseif ($this->config->get('low_order_fee_status')){
-                  $tax_rate = $this->model_payment_paytrail->taxRate($this->config->get('low_order_fee_tax_class_id'));
-              }
+            if(!empty($shipping_method['handling'])){
+               $handling = $shipping_method['handling'];
 
                   $this->data['products'][$item]["ITEM_TITLE"] = str_replace('<br/>', ', ', $handling['title']);
                   $products_data .= '|' . str_replace('<br/>', ', ', $handling['title']);
-                  // productid
                   $this->data['products'][$item]["ITEM_ID"] = $this->session->data['order_id'];
                   $products_data .= '|' . $this->session->data['order_id'];
 
                   $this->data['products'][$item]["ITEM_QUANTITY"] = 1;
                   $products_data .= '|1';
-                  $price_query_3 = $this->tax->calculate($handling['value'], $product['tax_class_id'], true);
+                  $price_query_3 = $this->tax->calculate($handling['price'], $handling['tax_class_id'], true);
 
                   $handling_price = $this->rounder($price_query_3);
                   $this->data['products'][$item]["ITEM_UNIT_PRICE"] = $handling_price;
                   $products_data .= '|' . $handling_price;
-                  $this->data['products'][$item]["ITEM_VAT_PERCENT"] = $tax_rate;
-                  $products_data .= '|' . $tax_rate;
+                  $this->data['products'][$item]["ITEM_VAT_PERCENT"] = $handling['tax_rate'];
+                  $products_data .= '|' . $handling['tax_rate'];
+
+                  $this->data['products'][$item]["ITEM_DISCOUNT_PERCENT"] = 0;
+                  $products_data .= '|0';
+
+                  $this->data['products'][$item]["ITEM_TYPE"] = 3;
+                  $products_data .= '|3';
+
+                  $products_field .= ",ITEM_TITLE[$item]";
+                  $products_field .= ",ITEM_ID[$item]";
+                  $products_field .= ",ITEM_QUANTITY[$item]";
+                  $products_field .= ",ITEM_UNIT_PRICE[$item]";
+                  $products_field .= ",ITEM_VAT_PERCENT[$item]";
+                  $products_field .= ",ITEM_DISCOUNT_PERCENT[$item]";
+                  $products_field .= ",ITEM_TYPE[$item]";
+                  $item++;
+              }
+ 
+            if(!empty($shipping_method['fee'])){
+               $fee = $shipping_method['fee'];
+
+                  $this->data['products'][$item]["ITEM_TITLE"] = str_replace('<br/>', ', ', $fee['title']);
+                  $products_data .= '|' . str_replace('<br/>', ', ', $fee['title']);
+                  $this->data['products'][$item]["ITEM_ID"] = $this->session->data['order_id'];
+                  $products_data .= '|' . $this->session->data['order_id'];
+
+                  $this->data['products'][$item]["ITEM_QUANTITY"] = 1;
+                  $products_data .= '|1';
+                  $price_query_4 = $this->tax->calculate($fee['price'], $fee['tax_class_id'], true);
+
+                  $fee_price = $this->rounder($price_query_4);
+                  $this->data['products'][$item]["ITEM_UNIT_PRICE"] = $fee_price;
+                  $products_data .= '|' . $fee_price;
+                  $this->data['products'][$item]["ITEM_VAT_PERCENT"] = $fee['tax_rate'];
+                  $products_data .= '|' . $fee['tax_rate'];
 
                   $this->data['products'][$item]["ITEM_DISCOUNT_PERCENT"] = 0;
                   $products_data .= '|0';
@@ -201,7 +224,6 @@ class ControllerPaymentPaytrail extends Controller {
                   $products_field .= ",ITEM_DISCOUNT_PERCENT[$item]";
                   $products_field .= ",ITEM_TYPE[$item]";
               }
-           
 
             $payer_field = ",PAYER_PERSON_PHONE,PAYER_PERSON_EMAIL,PAYER_PERSON_FIRSTNAME,PAYER_PERSON_LASTNAME" . $company_field .",PAYER_PERSON_ADDR_STREET,PAYER_PERSON_ADDR_POSTAL_CODE,PAYER_PERSON_ADDR_TOWN,PAYER_PERSON_ADDR_COUNTRY,VAT_IS_INCLUDED";
 
