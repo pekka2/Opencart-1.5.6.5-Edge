@@ -45,8 +45,15 @@ class ControllerPaymentPaybyway extends Controller {
 
                 $returnUrl = $this->url->link('payment/paybyway/confirm','SSL');
 
-		        $method = isset($this->request->get['method']) ? $this->request->get['method'] : '';
+		$method = isset($this->request->get['method']) ? $this->request->get['method'] : '';
                 $amount = $this->rounder($order_info['total']);
+
+                $languages = array('fi', 'en', 'sv','ru');
+                if(in_array($this->session->data['language'], $languages)){
+                	$lang = $this->session->data['language'];
+                } else {
+                	$lang = 'en';
+                }
 
 		        $payForm->addCharge(array(
 			        'order_number' => $this->session->data['order_id'],
@@ -155,7 +162,7 @@ class ControllerPaymentPaybyway extends Controller {
 			  	         'type' => 'e-payment', 
 				         'return_url' => $returnUrl,
 				         'notify_url' => $returnUrl,
-				         'lang' => 'fi'
+				         'lang' => $lang
 			         );
 
 			         if(isset($this->request->get['selected'])){
