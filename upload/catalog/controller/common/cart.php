@@ -29,7 +29,7 @@ class ControllerCommonCart extends Controller {
 			array_multisort($sort_order, SORT_ASC, $results);
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get($result['code'] . '_status') && file_exists(DIR_APPLICATION . 'model/total/' . $result['code'] . '.php')) {
 					$this->load->model('total/' . $result['code']);
 
 					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
