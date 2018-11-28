@@ -47,7 +47,15 @@ class ModelPaymentPaytrail extends Model {
 
            $code = explode('.',$query->row['shipping_code']);
 
-           $tax_class_id = $this->config->get($code[0] . '_tax_class_id');
+            if($code[0] == 'xshipping'){
+
+               $number = str_replace('xshipping','', $code[1]);
+
+               $tax_class_id = $this->config->get('xshipping_tax_class_id' . $number);
+
+           } else {
+              $tax_class_id = $this->config->get($code[0] . '_tax_class_id');
+           }
 
            $result['shipping'] = array('title' => $q->row['title'],
                                        'price' => $q->row['value'],
