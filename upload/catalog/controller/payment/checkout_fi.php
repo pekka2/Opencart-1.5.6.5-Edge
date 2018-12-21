@@ -31,7 +31,7 @@ class ControllerPaymentCheckoutFi extends Controller {
         $coData["delayed"]		= $this->url->link('payment/checkout_fi/callback');
         $coData["reject"]		= $this->url->link('common/home');
         $coData['cancel']       = $this->url->link('checkout/cart');
-        $coData["amount"]		= $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], FALSE) * 100; // price in cents
+        $coData["amount"]		= $order_info['total'] * 100; // price in cents
         $coData["delivery_date"] = date( "Ymd", strtotime("+3 day") );
         $coData["message"]       = $this->config->get('config_store') . ' - #' . $this->session->data['order_id'];
         $coData["firstname"]	 = $order_info['firstname'];
