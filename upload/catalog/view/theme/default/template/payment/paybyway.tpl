@@ -71,8 +71,8 @@
 					<hr>
 					<h2><?php echo $text_pay_button;?></h2>
 					<?php foreach ($merchantPaymentMethods->payment_methods as $pm): ?>
-						<a class="img" href="<?php echo $auth;?>&selected=<?=$pm->selected_value?>">
-							<img alt="<?= $pm->name ?>" src="<?= $pm->img ?>">
+						<a class="img" href="<?php echo $auth;?>&selected=<?php echo $pm->selected_value ?>">
+							<img alt="<?php echo $pm->name ?>" src="<?php echi $pm->img ?>">
 						</a>
 					<?php endforeach; ?>
 					<hr>
