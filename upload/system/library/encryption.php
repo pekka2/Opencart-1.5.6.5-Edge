@@ -5,7 +5,11 @@ final class Encryption {
 	
 	public function __construct($key) {
 		$this->key = hash('sha256', $key, true);
+	     if(function_exists('random_bytes')){
 		$this->iv = random_bytes(32);
+	     } else {
+	       $this->iv = mcrypt_create_iv(32, MCRYPT_RAND);
+	     }
 	}
 	
 	public function encrypt($value) {
