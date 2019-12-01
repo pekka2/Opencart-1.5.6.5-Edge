@@ -228,22 +228,6 @@ class ControllerStep3 extends Controller {
 			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
 		}
 
-		if ($this->request->post['db_driver'] == 'mysql') {
-			if(function_exists('mysql_connect')) {
-				if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
-					$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-				} else {
-					if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
-						$this->error['warning'] = 'Error: Database does not exist!';
-					}
-
-					mysql_close($connection);
-				}
-			} else {
-				$this->error['db_driver'] = 'MySQL is not supported on your server! Try using MySQLi';
-			}
-		}
-
 		if ($this->request->post['db_driver'] == 'mysqli') {
 			if(function_exists('mysqli_connect')) {
 				$connection = new mysqli($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'], $this->request->post['db_name']);
