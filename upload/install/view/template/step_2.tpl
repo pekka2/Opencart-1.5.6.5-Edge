@@ -64,12 +64,6 @@
           <th width="15%" align="center"><b>Status</b></th>
         </tr>
         <tr>
-          <td>MySQL:</td>
-          <td><?php echo extension_loaded('mysql') ? 'On' : 'Off'; ?></td>
-          <td>On</td>
-          <td align="center"><?php echo extension_loaded('mysql') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-        </tr>
-        <tr>
           <td>GD:</td>
           <td><?php echo extension_loaded('gd') ? 'On' : 'Off'; ?></td>
           <td>On</td>
