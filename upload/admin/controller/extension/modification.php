@@ -136,6 +136,10 @@ class ControllerExtensionModification extends Controller {
 			$modification = array();
 
 			foreach ($xml as $xml) {
+				if (empty($xml)){
+					continue;
+				}
+
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
