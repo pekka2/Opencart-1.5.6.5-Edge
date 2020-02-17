@@ -54,7 +54,7 @@ class ControllerProductSearch extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -96,7 +96,7 @@ class ControllerProductSearch extends Controller {
 		}
 
 		if (isset($this->request->get['category_id'])) {
-			$url .= '&category_id=' . $this->request->get['category_id'];
+			$url .= '&category_id=' . (int)$this->request->get['category_id'];
 		}
 
 		if (isset($this->request->get['sub_category'])) {
@@ -112,7 +112,7 @@ class ControllerProductSearch extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+			$url .= '&page=' . (int)$this->request->get['page'];
 		}	
 
 		if (isset($this->request->get['limit'])) {
