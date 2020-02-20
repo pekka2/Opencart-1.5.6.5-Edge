@@ -10,7 +10,7 @@ Features:
 * vQmod 2.6.1
 * Css style change for basic module boxes
 * Cardinity Payment Gateway
-* Checkout FI Payment Gateway
+* Checkout FI Payment Gateway (old gateway)
 * eWay Payment Gateway
 * First Data Payment Gateway
 * Paytrail Payment Gateway
