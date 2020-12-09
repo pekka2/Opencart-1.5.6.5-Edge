@@ -433,7 +433,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
+				$url .= '&page=' . (int)$this->request->get['page'];
 			}
 
 			if (isset($this->request->get['limit'])) {
