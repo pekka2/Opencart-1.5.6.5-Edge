@@ -702,7 +702,7 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
 		$this->data['breadcrumbs'] = array();
@@ -722,7 +722,7 @@ class ControllerCatalogProduct extends Controller {
 		if (!isset($this->request->get['product_id'])) {
 			$this->data['action'] = $this->url->link('catalog/product/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL');
+			$this->data['action'] = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . (int)$this->request->get['product_id'] . $url, 'SSL');
 		}
 
 		$this->data['cancel'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL');
