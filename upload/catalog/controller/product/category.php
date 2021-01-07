@@ -34,9 +34,9 @@ class ControllerProductCategory extends Controller {
 		}
 
 		if (isset($this->request->get['limit'])) {
-			$limit = $this->request->get['limit'];
+			$limit = (int)$this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('config_catalog_limit');
+			$limit = (int)$this->config->get('config_catalog_limit');
 		}
 
 		$this->data['breadcrumbs'] = array();
@@ -59,7 +59,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$path = '';
@@ -136,7 +136,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$this->data['breadcrumbs'][] = array(
@@ -169,7 +169,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$this->data['categories'] = array();
@@ -378,7 +378,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$pagination = new Pagination();
@@ -437,7 +437,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)this->request->get['limit'];
 			}
 
 			$this->data['breadcrumbs'][] = array(
