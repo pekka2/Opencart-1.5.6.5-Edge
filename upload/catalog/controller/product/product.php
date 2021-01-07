@@ -59,7 +59,7 @@ class ControllerProductProduct extends Controller {
 				}
 
 				if (isset($this->request->get['limit'])) {
-					$url .= '&limit=' . $this->request->get['limit'];
+					$url .= '&limit=' . (int)$this->request->get['limit'];
 				}
 
 				$this->data['breadcrumbs'][] = array(
@@ -94,7 +94,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
@@ -144,7 +144,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$this->data['breadcrumbs'][] = array(
@@ -212,7 +212,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$this->data['breadcrumbs'][] = array(
@@ -447,13 +447,13 @@ class ControllerProductProduct extends Controller {
 					'product_id' => $result['product_id'],
 					'thumb'   	 => $image,
 					'name'    	 => $result['name'],
-                    'desc'       => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $length) . '..',	
+                                        'desc'           => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $length) . '..',	
 					'price'   	 => $price,
 					'special' 	 => $special,
-					'rating'     => $rating,
-					'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $length) . '..',
-					'tax'         => $tax,					
-					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+					'rating'         => $rating,
+					'description'    => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $length) . '..',
+					'tax'            => $tax,					
+					'reviews'        => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
@@ -540,7 +540,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
+				$url .= '&limit=' . (int)$this->request->get['limit'];
 			}
 
 			$this->data['breadcrumbs'][] = array(
@@ -591,7 +591,7 @@ class ControllerProductProduct extends Controller {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
-			$page = 1;
+			$page = (int)1;
 		}
 
 		$this->data['reviews'] = array();
@@ -645,9 +645,9 @@ class ControllerProductProduct extends Controller {
 		}
 
 		if (isset($this->request->post['quantity'])) {
-			$quantity = $this->request->post['quantity'];
+			$quantity = (int)$this->request->post['quantity'];
 		} else {
-			$quantity = 1;
+			$quantity = (int)1;
 		}
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
